@@ -74,7 +74,7 @@ const Experience: React.FC<{ isActive: boolean }> = ({ isActive }) => {
               <h4 
                 className="relative w-fit font-ibm-plex-sans text-base lg:text-lg text-fgContrast font-semibold selection:bg-fgContrast" 
                 dangerouslySetInnerHTML={{ __html: experience.position }} 
-                style={{ color: accentColor }}
+                style={{ color: experience.period.includes('Present') ? accentColor : 'var(--fg-soft)' }}
               />
               <div 
                 className="relative flex rounded-full w-2.5 h-2.5 lg:w-3 lg:h-3 bg-fgContrast" 

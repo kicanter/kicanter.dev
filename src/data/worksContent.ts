@@ -14,7 +14,7 @@ export const worksContent = [
     githubURL: 'https://github.com/kierancanter/candela.nvim',
     description: "Neovim plugin for efficient log analysis. Allows users to manage regex patterns, highlight matched lines, filter out non-matches, and rapidly navigate through matches. Customizable user configuration and support for multiple regex search engines. Written in Lua.",
     technologies: ['Lua'],
-    wip: true,
+    wip: false,
   },
   {
     project: 'RocketOdds',
@@ -42,7 +42,7 @@ export const worksContent = [
     project: 'FlipReady',
     githubURL: 'https://github.com/kierancanter/flipready',
     projectURL: 'https://bakkesplugins.com/plugins/view/401',
-    description: "Actively maintained plugin for the popular Rocket League mod, BakkesMod. Highly customizable text indicator with decaying gauge bar to visualize the status of your air roll/double jump (for training purposes). Written in C++ using the Bakkesmod SDK. Currently amassed 5000+ downloads.",
+    description: "Actively maintained plugin for the popular Rocket League mod, BakkesMod. Highly customizable text indicator with decaying gauge bar to visualize the status of your air roll/double jump (for training purposes). Written in C++ using the Bakkesmod SDK. Currently amassed 9000+ downloads.",
     technologies: ['C++'],
     wip: false,
   },
