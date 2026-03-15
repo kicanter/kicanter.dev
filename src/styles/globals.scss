@@ -155,6 +155,11 @@ h6 {
   @apply text-fgHard font-medium selection:bg-fgHard !important;
 }
 
+.inline-code {
+  @apply text-bg text-sm font-semibold font-ibm-plex-mono bg-fgSoft selection:bg-bg
+  selection:text-fgSoft px-1 py-0.5 rounded !important;
+}
+
 .text-link {
   @apply text-fgContrast font-medium selection:bg-fgContrast hover:opacity-75 transition duration-250 !important;
 }

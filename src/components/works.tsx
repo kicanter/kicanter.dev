@@ -57,7 +57,7 @@ const Works: React.FC<{ isActive: boolean }> = ({ isActive }) => {
     <section
       key={updateKey}
       id="works-container"
-      className="relative flex flex-col gap-4 w-full lg:w-kic-width h-fit lg:pointer-events-none"
+      className="relative flex flex-col gap-4 w-full lg:w-kic-width h-fit pb-8 lg:pointer-events-none"
       role="region" 
       aria-label="Works and Projects"
     >
