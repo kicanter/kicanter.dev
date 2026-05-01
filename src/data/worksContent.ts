@@ -17,6 +17,13 @@ export const worksContent = [
     wip: true,
   },
   {
+    project: 'Clipbender',
+    githubURL: 'https://github.com/kierancanter/clipbender',
+    description: `Linux clipboard manager modeled after Neovim registers.`,
+    technologies: ['Odin?'],
+    wip: true,
+  },
+  {
     project: 'huey',
     githubURL: 'https://github.com/kierancanter/huey',
     description: `Small and fast TUI tool for color selection and conversion directly from your
@@ -31,7 +38,7 @@ export const worksContent = [
     description: `Zero-dependency library for color conversion across various color spaces and color
       models. Compatible with your favorite language as a stable C lib. Written in Zig.`,
     technologies: ['Zig', 'C'],
-    wip: true,
+    wip: false,
   },
   {
     project: 'candela.nvim',
