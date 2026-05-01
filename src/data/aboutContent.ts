@@ -30,9 +30,9 @@ technologies I've been working with:
   skills: [
     'Rust',
     'C++',
+    'Odin',
+    'Zig',
     'Lua',
     'Nushell',
-    'Zig',
-    'SQLite',
   ]
 };
