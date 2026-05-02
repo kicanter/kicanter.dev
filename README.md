@@ -1,7 +1,7 @@
 <h1 align="center">
   <img alt="KIC Logo" src="public/images/logo-canonical.png" width="100" />
   </br>
-  kierancanter.dev
+  kicanter.dev
 </h1>
 
 ## Contents
@@ -351,7 +351,7 @@ The theme switcher component was one that I battled with while choosing the best
 
 Ultimately, I selected the dual button option. Using toggle buttons to change the color theme seemed the most intuitive, and confining the implementation to two buttons instead of four allowed for a more compact design without sacrificing ease-of-use or self-evidence. The buttons would operate like a two-bit counter, where each button is a bit to supply four total options e.g. 00, 01, 10, and 11; one bit to swap between light and dark mode, and one bit to swap between subdued and colorful mode.
 
-Deeper into development, more challenges presented themselves when I chose to randomize the accent colors associated with the colorful modes. I had to figure out a way to not only dynamically set the CSS properties associated with the accent color, but part of my design also included a separation between the normal accent color (used for headings, links, theme name, etc.) and the randomized set of colors used for other elements (bullet points, technology badges, etc.). I solved these by writing [`colorfulSetter.ts`](https://github.com/KieranCanter/kierancanter.dev/blob/main/src/util/colorfulSetter.ts).
+Deeper into development, more challenges presented themselves when I chose to randomize the accent colors associated with the colorful modes. I had to figure out a way to not only dynamically set the CSS properties associated with the accent color, but part of my design also included a separation between the normal accent color (used for headings, links, theme name, etc.) and the randomized set of colors used for other elements (bullet points, technology badges, etc.). I solved these by writing [`colorfulSetter.ts`](https://github.com/kicanter/kierancanter.dev/blob/main/src/util/colorfulSetter.ts).
 
 Within this file, I defined the two sets of colors to be used for either Brilliant or Luminous. These colors had to be carefully selected to guarantee visibility and contrast between them and the background colors. In addition, two functions were conceived to do all the legwork. The first `getContrastColor()` is responsible for dynamically selecting a random color from the set when the theme changes to a colorful mode. To prevent a color from consecutively being repeated, it's excluded from the set of colors to choose from. This function is run in `themeContext.tsx` whenever the theme is set to Brilliant or Luminous. Because the colors are supposed to change for each element, the second function `generateAccentColor()` is meant to be called when setting the accent color on each one. If the theme is Plush or Sombre, nothing is done. If the theme is Brilliant or Luminous, `getContrastColor()` is called to select a new random color that excludes the accent color selected in the theme context.
 
@@ -373,7 +373,7 @@ As seen from my original [Figma design](https://www.figma.com/design/tP5ITD5rjft
 
 I thought about the user experience more and realized "maybe I don't even want the user to have to scroll to find my sections and have other content clogging the viewport." Choosing to segregate sections by heading, content needed to remain scrollable in the event that it extends past the screen, but only the content of that section needed to be scrollable, not the entire page. This way, users didn't even get the chance to be distracted by content unrelated to what they wanted to see. Finding the desired section is quick, efficient, and effortless.
 
-By the time I decided to completely revamp my website, I had almost already finished the core implementation (as seen in this [commit](https://github.com/KieranCanter/kierancanter.dev/commit/6c8fc4d81e86e1f25054fe7d7fe69ef179ccbf5a)), but in the end it was completely worth it to produce a more refined result.
+By the time I decided to completely revamp my website, I had almost already finished the core implementation (as seen in this [commit](https://github.com/kicanter/kierancanter.dev/commit/6c8fc4d81e86e1f25054fe7d7fe69ef179ccbf5a)), but in the end it was completely worth it to produce a more refined result.
 
 ### Colorful Bullet Points
 

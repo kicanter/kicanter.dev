@@ -11,7 +11,7 @@
 export const worksContent = [
   {
     project: 'Filebender',
-    githubURL: 'https://github.com/kierancanter/filebender',
+    githubURL: 'https://github.com/kicanter/filebender',
     description: `Native and feature-rich file explorer for Linux. 'Tis but a pipedream currently.`,
     technologies: ['TBD'],
     wip: true,
@@ -25,7 +25,7 @@ export const worksContent = [
   },
   {
     project: 'huey',
-    githubURL: 'https://github.com/kierancanter/huey',
+    githubURL: 'https://github.com/kicanter/huey',
     description: `Small and fast TUI tool for color selection and conversion directly from your
       terminal. Proof-of-concept project for <span class='inline-code'>libchroma</span>. Perhaps a neovim plugin to accompany it?
         Written in Rust btw.`,
@@ -34,7 +34,7 @@ export const worksContent = [
   },
   {
     project: 'libchroma',
-    githubURL: 'https://github.com/kierancanter/libchroma',
+    githubURL: 'https://github.com/kicanter/libchroma',
     description: `Zero-dependency library for color conversion across various color spaces and color
       models. Compatible with your favorite language as a stable C lib. Written in Zig.`,
     technologies: ['Zig', 'C'],
@@ -42,7 +42,7 @@ export const worksContent = [
   },
   {
     project: 'candela.nvim',
-    githubURL: 'https://github.com/kierancanter/candela.nvim',
+    githubURL: 'https://github.com/kicanter/candela.nvim',
     description: `Neovim plugin for efficient log analysis. Allows users to manage regex patterns,
       highlight matched lines, filter out non-matches, and rapidly navigate through matches.
       Customizable user configuration and support for multiple regex search engines. Written in
@@ -51,9 +51,9 @@ export const worksContent = [
     wip: false,
   },
   {
-    project: 'kierancanter.dev',
-    githubURL: 'https://github.com/kierancanter/kierancanter.dev',
-    projectURL: 'https://kierancanter.dev',
+    project: 'kicanter.dev',
+    githubURL: 'https://github.com/kicanter/kicanter.dev',
+    projectURL: 'https://kicanter.dev',
     description: `The website you're viewing. Heavily focused on responsive design, accessibility,
     and pixel-perfect attention to detail. Roughly designed in Figma. Component prototypes tested in
     CodePen. Coded and developed in Cursor. Hosted on AWS and deployed with Vercel. Analytics
@@ -63,7 +63,7 @@ export const worksContent = [
   },
   {
     project: 'UFC Win Factors Model',
-    githubURL: 'https://github.com/kierancanter/ufcwinfactors',
+    githubURL: 'https://github.com/kicanter/ufcwinfactors',
     description: `A statistical analysis performed on UFC fighter and event stats to determine the
     qualities and attributes most related to winning fights. The data science pipeline is displayed
     through a Jupyter Notebook as a tutorial-style modeling. Written in Python, leveraging many
@@ -73,7 +73,7 @@ export const worksContent = [
   },
   {
     project: 'FlipReady',
-    githubURL: 'https://github.com/kierancanter/flipready',
+    githubURL: 'https://github.com/kicanter/flipready',
     projectURL: 'https://bakkesplugins.com/plugin/401',
     description: `Actively maintained plugin for the popular Rocket League mod, BakkesMod. Highly
       customizable text indicator with decaying gauge bar to visualize the status of your air
@@ -84,7 +84,7 @@ export const worksContent = [
   },
   {
     project: 'Simple Blackjack',
-    githubURL: 'https://github.com/KieranCanter/SimpleBlackjack',
+    githubURL: 'https://github.com/kicanter/SimpleBlackjack',
     description: `Simple, collaborative blackjack mobile application written for Android using
       Android Studio. Utilizes a Model-View-Controller architectural pattern. Automated builds and
     dependency management using Gradle.`,

@@ -9,7 +9,7 @@ import Link from 'next/link';
 const Footer = () => {
   return (
     <Link 
-      href="https://github.com/kierancanter/kierancanter.dev"
+      href="https://github.com/kicanter/kicanter.dev"
       data-umami-event="Footer Click"
       target="_blank"
       rel="noopener noreferrer"

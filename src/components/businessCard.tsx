@@ -12,8 +12,8 @@ import LogoSVG from '@/components/logoSVG';
 
 // Define social media links with contact info and icons
 const socialLinks = [
-  { title: 'Email', href: 'mailto:contact@kierancanter.dev', icon: faEnvelope },
-  { title: 'GitHub', href: 'https://github.com/kierancanter', icon: faGithub },
+  { title: 'Email', href: 'mailto:him@kicanter.dev', icon: faEnvelope },
+  { title: 'GitHub', href: 'https://github.com/kicanter', icon: faGithub },
   { title: 'LinkedIn', href: 'https://www.linkedin.com/in/kierancanter/', icon: faLinkedin },
   { title: 'CodePen', href: 'https://codepen.io/kierancanter', icon: faCodepen },
 ];

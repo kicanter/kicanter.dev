@@ -10,7 +10,7 @@ export default function NotFound() {
   
       <div className="relative flex w-11/12 h-fit lg:max-w-screen-sm mb-4 items-center text-md lg:text-2xl text-fgSoft text-center">
         <h1 className="flex-1">Me when I visit
-          <Link href="https://kierancanter.dev" className="text-fgHard hover:text-fgContrast selection:text-bg selection:bg-fgHard transition-colors hover:selection:bg-fgContrast duration-250"> kierancanter.dev</Link>
+          <Link href="https://kicanter.dev" className="text-fgHard hover:text-fgContrast selection:text-bg selection:bg-fgHard transition-colors hover:selection:bg-fgContrast duration-250"> kicanter.dev</Link>
         </h1>
         <h1 className="flex-1">Me when page not found</h1>
       </div>

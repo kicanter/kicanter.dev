@@ -12,9 +12,9 @@ import Footer from "@/components/footer";
  * Defines SEO and Open Graph properties for the site
  */
 export const metadata: Metadata = {
-  title: "kierancanter.dev",
+  title: "kicanter.dev",
   description: "If you're reading this, drink more milk",
-  applicationName: "kierancanter.dev",
+  applicationName: "kicanter.dev",
   authors: [{ name: "Kieran Canter" }],
   keywords: ["development", "portfolio"],
   creator: "Kieran Canter",
@@ -27,15 +27,15 @@ export const metadata: Metadata = {
     email: true,
     url: true
   },
-  metadataBase: new URL("https://kierancanter.dev"),
+  metadataBase: new URL("https://kicanter.dev"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "kierancanter.dev",
+    title: "kicanter.dev",
     description: "If you're reading this, drink more milk",
-    url: "https://kierancanter.dev",
-    siteName: "kierancanter.dev",
+    url: "https://kicanter.dev",
+    siteName: "kicanter.dev",
     locale: "en_US",
     type: "website",
     images: [{
@@ -95,14 +95,6 @@ export default function RootLayout({
 
         {/* Legacy Support */}
         <link rel="favicon" type="image/x-icon" href="/favicon.ico" />
-
-        {/* Umami Analytics */}
-        <script
-          async
-          defer
-          data-website-id="658ef7a3-7ea5-43da-bee8-c72599e04d99"
-          src="https://analytics.kierancanter.dev/script.js"
-        ></script>
       </head>
 
       <body className="antialiased bg-bg text-fgSoft selection:text-bg selection:bg-fgSoft [&_*]:no-scrollbar transition-colors duration-250">
