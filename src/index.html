@@ -33,11 +33,45 @@
         <!-- External Assets -->
         <meta name="theme-color" content="#ffffff" />
         <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="card.css">
+        <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css">
     </head>
     <body>
-        <div>
-            <h1 id="name">Kieran CANTER</h1>
-            <h2 id="title">Software Engineer</h2>
-        </div>
+  <div id="card" aria-label="Kieran Canter's Business Card">
+
+    <div id="headband">
+      <a id="email" class="link" href="mailto:him@kicanter.dev" title="Email" aria-label="Email: him@kicanter.dev" target="_blank" rel="noopener noreferrer">
+        him@kicanter.dev
+      </a>
+
+      <a id="logo" class="link" href="https://www.youtube.com/watch?v=YHgwxVCiMyI" title="Impressive. Very nice. Let's see Paul Allen's card." target="_blank" rel="noopener noreferrer" aria-label="Logo: Link to an American Psycho video reference">
+        <!-- LogoSVG placeholder - replace with your actual SVG -->
+        <svg width="50" height="50" alt="Logo">
+          <use href="logo.svg"/>
+        </svg>
+      </a>
+    </div>
+
+    <div id="me" aria-labelledby="name title">
+      <h1 id="name">Kieran CANTER</h1>
+      <h2 id="title">Software Engineer</h2>
+    </div>
+
+    <div id="socials" aria-label="Social media links">
+      <a href="https://github.com/kicanter" title="GitHub" aria-label="Visit GitHub profile" target="_blank" rel="noopener noreferrer">
+        <i class="nf nf-md-github link" aria-hidden="true"></i>
+      </a>
+      <a href="https://git.kicanter.dev" title="Forgejo" aria-label="Visit self-hosted Forgejo git server" target="_blank" rel="noopener noreferrer">
+        <i class="nf nf-linux-forgejo link" aria-hidden="true"></i>
+      </a>
+      <a href="https://linkedin.com/in/kierancanter/" title="LinkedIn" aria-label="Visit LinkedIn profile" target="_blank" rel="noopener noreferrer">
+        <i class="nf nf-md-linkedin link" aria-hidden="true"></i>
+      </a>
+      <a href="https://x.com/kicanter" title="X" aria-label="Visit X profile" target="_blank" rel="noopener noreferrer">
+        <i class="nf nf-dev-twitter link" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+
     </body>
 </html>
