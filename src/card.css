@@ -1,0 +1,148 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #352925;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+#card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 6rem);
+  max-width: 24rem;
+  aspect-ratio: 7 / 4;
+  margin: auto;
+  padding: 0.5rem;
+  color: #1e1e1e;
+  background: #f0ead6;
+  border-radius: 2px;
+  box-shadow: 0rem 0.1rem 0.4rem 0rem rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+}
+
+#card *::selection {
+  background-color: #2b2425;
+  color: #f0ead6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Phone and Logo Section */
+#headband {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#email {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  font-family: 'IBM Plex Serif', serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+#logo {
+  position: relative;
+  aspect-ratio: 1;
+  width: 1.25rem;
+  height: fit-content;
+}
+
+#logo svg {
+  width: 100%;
+  height: 100%;
+  fill: #1e1e1e;
+}
+
+#logo:hover svg {
+    filter: brightness(0) saturate(100%) invert(10%) sepia(41%) saturate(6487%) hue-rotate(354deg) brightness(92%) contrast(116%);
+  transition: filter 0.1s ease;
+}
+
+/* Center Content */
+#centerpiece {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: flex-end;
+}
+
+#me {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  align-items: center;
+}
+
+#name {
+  font-family: "Spectral SC", serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+#title {
+  font-family: "Spectral SC", serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Social Links */
+#socials {
+  position: relative;
+  font-size: 1rem;
+  display: flex;
+  width: 25%;
+  height: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+}
+
+.link:hover {
+  color: #6e0000;
+  transition: all 0.1s ease;
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+  #card {
+    max-width: 28rem;
+    padding: 0.75rem;
+  }
+
+  #name {
+    font-size: 1.125rem;
+  }
+
+  #title {
+    font-size: 0.8rem;
+  }
+}
+
+/* Medium screens */
+@media (min-width: 768px) {
+  #logo {
+    width: 1.5rem;
+  }
+}
