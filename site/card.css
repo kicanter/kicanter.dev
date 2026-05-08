@@ -5,11 +5,13 @@
 }
 
 body {
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #352925;
+    padding: 1rem;
 }
 
 /* Flip mechanism */
@@ -19,7 +21,7 @@ body {
 
 #card-container {
     perspective: 1000px;
-    width: 100vw;
+    width: 100%;
     max-width: 24rem;
     aspect-ratio: 7 / 4;
     margin: auto;
@@ -140,10 +142,12 @@ a {
 
 .job-footer {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
 }
 
-#works {
+#works h3 {
+    color: rgba(53, 41, 37, 0.8);
 }
 
 .project-headband {
