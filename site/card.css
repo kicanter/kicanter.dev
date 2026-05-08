@@ -232,6 +232,7 @@ a {
     width: fit-content;
     height: fit-content;
     font-family: "IBM Plex Serif", serif;
+    font-weight: 500;
     font-size: 0.75rem;
 }
 
@@ -274,19 +275,19 @@ a {
 #name {
     font-family: "Spectral SC", serif;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 #title {
     font-family: "Spectral SC", serif;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* Social Links */
 #socials {
     position: relative;
-    font-size: 1rem;
+    font-size: 0.9rem;
     display: flex;
     width: 30%;
     height: fit-content;

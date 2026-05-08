@@ -70,14 +70,6 @@
  */
 @font-face {
     font-family: "Spectral SC";
-    src: url("fonts/Spectral_SC/SpectralSC-Bold.ttf") format("truetype");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Spectral SC";
     src: url("fonts/Spectral_SC/SpectralSC-SemiBold.ttf") format("truetype");
     font-weight: 600;
     font-style: normal;
@@ -85,9 +77,17 @@
 }
 
 @font-face {
+    font-family: "Spectral SC";
+    src: url("fonts/Spectral_SC/SpectralSC-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
     font-family: "IBM Plex Serif";
-    src: url("fonts/IBM_Plex_Serif/IBMPlexSerif-SemiBold.ttf") format("truetype");
-    font-weight: 600;
+    src: url("fonts/IBM_Plex_Serif/IBMPlexSerif-Medium.ttf") format("truetype");
+    font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
