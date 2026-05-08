@@ -1,148 +1,296 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #352925;
-  font-family: system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #352925;
 }
 
-#card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: calc(100vw - 6rem);
-  max-width: 24rem;
-  aspect-ratio: 7 / 4;
-  margin: auto;
-  padding: 0.5rem;
-  color: #1e1e1e;
-  background: #f0ead6;
-  border-radius: 2px;
-  box-shadow: 0rem 0.1rem 0.4rem 0rem rgba(0, 0, 0, 0.3);
-  pointer-events: auto;
+/* Flip mechanism */
+#flip-toggle {
+    display: none;
 }
 
-#card *::selection {
-  background-color: #2b2425;
-  color: #f0ead6;
+#card-container {
+    perspective: 1000px;
+    width: 100vw;
+    max-width: 24rem;
+    aspect-ratio: 7 / 4;
+    margin: auto;
+}
+
+#card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.2s ease;
+    transform-style: preserve-3d;
+}
+
+#card-inner *::selection {
+    background: #352925;
+    color: #f0ead6;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
+}
+
+#flip-toggle:checked ~ #card-container #card-inner {
+    transform: rotateY(-180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 2px;
+    box-shadow: 0rem 0.1rem 0.4rem 0rem rgba(0, 0, 0, 0.3);
+}
+#card-front {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    color: #1e1e1e;
+    background: #f0ead6;
+    pointer-events: auto;
+}
+
+#card-back {
+    background: #f0ead6;
+    color: #1e1e1e;
+    transform: rotateY(180deg);
+    padding: 0.5rem;
+    font-family: "IBM Plex Sans", sans-serif;
+    overflow-y: auto;
+}
+
+@supports (scrollbar-color: auto) {
+    #card-back {
+        scrollbar-width: none;
+    }
+}
+
+@supports selector(::-webkit-scrollbar) {
+    #card-back::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Back face sections */
+#card-back section + section {
+    margin-top: 0.4rem;
+}
+
+.resume h1 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #1e1e1e;
+    padding-bottom: 0.15rem;
+    margin-bottom: 0.25rem;
+}
+
+.resume > ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    gap: 0.25rem;
+}
+
+.resume > ul > li {
+    display: flex;
+    flex-direction: column;
+    background: #35292540;
+    border-radius: 2px;
+    padding: 0.25rem;
+    gap: 0.25rem;
+}
+
+.resume h2 {
+    display: block;
+    font-size: 0.8rem;
+}
+.resume h3 {
+    font-size: 0.7rem;
+}
+
+.resume h4 {
+    font-size: 0.7rem;
+    font-family: "IBM Plex Mono", mono;
+    white-space: pre;
+}
+
+#jobs {
+    color: rgba(53, 41, 37, 0.8);
+}
+
+.job-active {
+    color: rgb(90, 0, 0);
+    background: rgb(from currentColor r g b / 0.9);
+}
+
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#works {
+}
+
+.project-headband {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.stack {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.6rem;
+    font-family: "IBM Plex Mono", mono;
+    font-weight: 400;
+    gap: 0.15rem;
+    margin-top: 0.15rem;
+    list-style: none;
+}
+
+.stack li {
+    padding: 0.15rem 0.3rem;
+    color: #f0ead6;
+    background: rgb(90, 0, 0);
+    border-radius: 2px;
+}
+
+#card-back .stack li::selection {
+    background: #9e463a;
+}
+
+.wip {
+    position: relative;
+    overflow: hidden;
+}
+
+.wip::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.wip::after {
+    content: "WORK IN PROGRESS";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    padding: 0.25rem;
+    background: rgb(90, 0, 0);
+    color: #f0ead6;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    z-index: 2;
 }
 
 /* Phone and Logo Section */
 #headband {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
 }
 
 #email {
-  position: relative;
-  width: fit-content;
-  height: fit-content;
-  font-family: 'IBM Plex Serif', serif;
-  font-weight: 700;
-  font-size: 0.75rem;
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    font-family: "IBM Plex Serif", serif;
+    font-size: 0.75rem;
 }
 
 #logo {
-  position: relative;
-  aspect-ratio: 1;
-  width: 1.25rem;
-  height: fit-content;
+    width: 1.25rem;
 }
 
 #logo svg {
-  width: 100%;
-  height: 100%;
-  fill: #1e1e1e;
+    width: 100%;
+    height: auto;
+    fill: #1e1e1e;
 }
 
 #logo:hover svg {
-    filter: brightness(0) saturate(100%) invert(10%) sepia(41%) saturate(6487%) hue-rotate(354deg) brightness(92%) contrast(116%);
-  transition: filter 0.1s ease;
+    filter: brightness(0) saturate(100%) invert(7%) sepia(95%) saturate(4977%) hue-rotate(24deg) brightness(83%)
+        contrast(122%);
+    transition: filter 0.1s ease;
 }
 
 /* Center Content */
 #centerpiece {
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: flex-end;
 }
 
 #me {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: fit-content;
-  height: fit-content;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    align-items: center;
 }
 
 #name {
-  font-family: "Spectral SC", serif;
-  font-size: 1rem;
-  font-weight: 700;
+    font-family: "Spectral SC", serif;
+    font-size: 1rem;
+    font-weight: 700;
 }
 
 #title {
-  font-family: "Spectral SC", serif;
-  font-size: 0.75rem;
-  font-weight: 600;
+    font-family: "Spectral SC", serif;
+    font-size: 0.75rem;
+    font-weight: 600;
 }
 
 /* Social Links */
 #socials {
-  position: relative;
-  font-size: 1rem;
-  display: flex;
-  width: 25%;
-  height: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: space-between;
+    position: relative;
+    font-size: 1rem;
+    display: flex;
+    width: 25%;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
 }
 
-.link:hover {
-  color: #6e0000;
-  transition: all 0.1s ease;
+a:hover {
+    color: rgb(90, 0, 0);
+    transition: all 0.1s ease;
 }
 
 /* Large screens */
 @media (min-width: 1024px) {
-  #card {
-    max-width: 28rem;
-    padding: 0.75rem;
-  }
-
-  #name {
-    font-size: 1.125rem;
-  }
-
-  #title {
-    font-size: 0.8rem;
-  }
-}
-
-/* Medium screens */
-@media (min-width: 768px) {
-  #logo {
-    width: 1.5rem;
-  }
+    #card-container {
+        zoom: 1.25;
+    }
 }
