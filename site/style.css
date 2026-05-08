@@ -1,68 +1,41 @@
 /**
  * Theme Color Variables
- * Defines color palettes for all theme variants
  */
 :root {
-    /* Plush - Light subdued theme */
-    --plush-bg: rgb(185, 172, 174);
-    --plush-fg-soft: rgb(86, 73, 75);
-    --plush-fg-hard: rgb(43, 36, 37);
-    --plush-fg-contrast: rgb(90, 0, 0);
+    /* Parchment (light): light tan theme */
+    --parchment-bg: #d6c4b0;
+    --parchment-fg: #f2ebe0;
+    --parchment-text-soft: #6f6960;
+    --parchment-text-hard: #1e1e1e;
+    --parchment-text-contrast: rgb(90, 0, 0);
 
-    /* Sombre - Dark subdued theme */
-    --sombre-bg: rgb(43, 36, 37);
-    --sombre-fg-soft: rgb(150, 132, 135);
-    --sombre-fg-hard: rgb(185, 172, 174);
-    --sombre-fg-contrast: rgb(255, 227, 181);
-
-    /* Brilliant - Light colorful theme */
-    --brilliant-bg: rgb(229, 229, 229);
-    --brilliant-fg-soft: rgb(81, 81, 81);
-    --brilliant-fg-hard: rgb(18, 18, 18);
-    --brilliant-fg-contrast: rgb(180, 98, 123);
-
-    /* Luminous - Dark colorful theme */
-    --luminous-bg: rgb(38, 38, 38);
-    --luminous-fg-soft: rgb(174, 174, 174);
-    --luminous-fg-hard: rgb(229, 229, 229);
-    --luminous-fg-contrast: rgb(204, 183, 254);
+    /* Ganache (dark): deep chocolate brown theme */
+    --ganache-bg: #352925;
+    --ganache-fg: #5d4f4b;
+    --ganache-text-soft: #ad9d98;
+    --ganache-text-hard: #e8ddd4;
+    --ganache-text-contrast: rgb(255, 227, 181);
 }
 
 /**
- * Theme Applications
  * Maps theme variables to CSS custom properties
  */
-
-/* Light Subdued Theme */
-:root[data-theme="plush"] {
-    --bg: var(--plush-bg);
-    --fg-soft: var(--plush-fg-soft);
-    --fg-hard: var(--plush-fg-hard);
-    --fg-contrast: var(--plush-fg-contrast);
+/* Light Theme */
+:root[data-theme="parchment"] {
+    --bg: var(--parchment-bg);
+    --fg: var(--parchment-fg);
+    --text-soft: var(--parchment-text-soft);
+    --text-hard: var(--parchment-text-hard);
+    --text-contrast: var(--parchment-text-contrast);
 }
 
-/* Dark Subdued Theme */
-:root[data-theme="sombre"] {
-    --bg: var(--sombre-bg);
-    --fg-soft: var(--sombre-fg-soft);
-    --fg-hard: var(--sombre-fg-hard);
-    --fg-contrast: var(--sombre-fg-contrast);
-}
-
-/* Light Colorful Theme */
-:root[data-theme="brilliant"] {
-    --bg: var(--brilliant-bg);
-    --fg-soft: var(--brilliant-fg-soft);
-    --fg-hard: var(--brilliant-fg-hard);
-    --fg-contrast: var(--brilliant-fg-contrast);
-}
-
-/* Dark Colorful Theme */
-:root[data-theme="luminous"] {
-    --bg: var(--luminous-bg);
-    --fg-soft: var(--luminous-fg-soft);
-    --fg-hard: var(--luminous-fg-hard);
-    --fg-contrast: var(--luminous-fg-contrast);
+/* Dark Theme */
+:root[data-theme="ganache"] {
+    --bg: var(--ganache-bg);
+    --fg: var(--ganache-fg);
+    --text-soft: var(--ganache-text-soft);
+    --text-hard: var(--ganache-text-hard);
+    --text-contrast: var(--ganache-text-contrast);
 }
 
 /**
@@ -108,10 +81,3 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: "IBM Plex Mono";
-    src: url("fonts/IBM_Plex_Mono/IBMPlexMono-Regular.ttf") format("truetype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
