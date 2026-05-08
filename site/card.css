@@ -88,8 +88,11 @@ a {
 }
 
 /* Back face sections */
-#card-back section + section {
-    margin-top: 0.4rem;
+#card-back {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    gap: 1rem;
 }
 
 .resume h1 {
@@ -97,15 +100,15 @@ a {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     border-bottom: 1px solid #1e1e1e;
-    padding-bottom: 0.15rem;
-    margin-bottom: 0.25rem;
+    padding-bottom: 0.1rem;
+    margin-bottom: 0.5rem;
 }
 
 .resume > ul {
     display: flex;
     flex-direction: column;
     list-style: none;
-    gap: 0.25rem;
+    gap: 0.5rem;
 }
 
 .resume > ul > li {
@@ -117,6 +120,11 @@ a {
     gap: 0.25rem;
 }
 
+.resume > ul > li:hover {
+    background: #35292550;
+    transition: background 0.1s ease;
+}
+
 .resume h2 {
     display: block;
     font-size: 0.9rem;
@@ -126,7 +134,7 @@ a {
 }
 
 .resume h4 {
-    font-size: 0.5rem;
+    font-size: 0.7rem;
     font-family: "IBM Plex Mono", mono;
     white-space: pre;
 }
@@ -281,7 +289,7 @@ a {
     position: relative;
     font-size: 1rem;
     display: flex;
-    width: 25%;
+    width: 30%;
     height: fit-content;
     margin-left: auto;
     margin-right: auto;
@@ -296,6 +304,6 @@ a:hover {
 /* Large screens */
 @media (min-width: 1024px) {
     #card-container {
-        zoom: 1.25;
+        zoom: 1.15;
     }
 }
