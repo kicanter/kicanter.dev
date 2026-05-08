@@ -117,14 +117,14 @@ a {
 
 .resume h2 {
     display: block;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 .resume h3 {
     font-size: 0.7rem;
 }
 
 .resume h4 {
-    font-size: 0.7rem;
+    font-size: 0.5rem;
     font-family: "IBM Plex Mono", mono;
     white-space: pre;
 }
