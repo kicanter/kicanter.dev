@@ -33,45 +33,231 @@
         <!-- External Assets -->
         <meta name="theme-color" content="#ffffff" />
         <link rel="stylesheet" href="style.css" />
-        <link rel="stylesheet" href="card.css">
-        <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css">
+        <link rel="stylesheet" href="card.css" />
+        <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css" />
     </head>
     <body>
-  <div id="card" aria-label="Kieran Canter's Business Card">
+        <input type="checkbox" id="flip-toggle" aria-hidden="true" />
+        <label for="flip-toggle" id="card-container" aria-label="Click to flip card">
+            <div id="card-inner">
+                <!-- Front Face -->
+                <div id="card-front" class="card-face" aria-label="Kieran Canter's Business Card">
+                    <div id="headband">
+                        <a
+                            id="email"
+                            href="mailto:him@kicanter.dev"
+                            title="Email"
+                            aria-label="Email: him@kicanter.dev"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            him@kicanter.dev
+                        </a>
 
-    <div id="headband">
-      <a id="email" class="link" href="mailto:him@kicanter.dev" title="Email" aria-label="Email: him@kicanter.dev" target="_blank" rel="noopener noreferrer">
-        him@kicanter.dev
-      </a>
+                        <a
+                            id="logo"
+                            href="https://www.youtube.com/watch?v=YHgwxVCiMyI"
+                            title="Impressive. Very nice. Let's see Paul Allen's card."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Logo: Link to an American Psycho video reference"
+                        >
+                            <!-- LogoSVG placeholder - replace with your actual SVG -->
+                            <svg viewBox="0 0 100 100" alt="Logo">
+                                <use href="logo.svg" />
+                            </svg>
+                        </a>
+                    </div>
 
-      <a id="logo" class="link" href="https://www.youtube.com/watch?v=YHgwxVCiMyI" title="Impressive. Very nice. Let's see Paul Allen's card." target="_blank" rel="noopener noreferrer" aria-label="Logo: Link to an American Psycho video reference">
-        <!-- LogoSVG placeholder - replace with your actual SVG -->
-        <svg width="50" height="50" alt="Logo">
-          <use href="logo.svg"/>
-        </svg>
-      </a>
-    </div>
+                    <div id="me" aria-labelledby="name title">
+                        <h1 id="name">Kieran CANTER</h1>
+                        <h2 id="title">Software Engineer</h2>
+                    </div>
 
-    <div id="me" aria-labelledby="name title">
-      <h1 id="name">Kieran CANTER</h1>
-      <h2 id="title">Software Engineer</h2>
-    </div>
+                    <div id="socials" aria-label="Social media links">
+                        <a
+                            href="https://github.com/kicanter"
+                            title="GitHub"
+                            aria-label="Visit GitHub profile"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <i class="nf nf-md-github" aria-hidden="true"></i>
+                        </a>
+                        <a
+                            href="https://git.kicanter.dev"
+                            title="Forgejo"
+                            aria-label="Visit self-hosted Forgejo git server"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <i class="nf nf-linux-forgejo" aria-hidden="true"></i>
+                        </a>
+                        <a
+                            href="https://linkedin.com/in/kierancanter/"
+                            title="LinkedIn"
+                            aria-label="Visit LinkedIn profile"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <i class="nf nf-md-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a
+                            href="https://x.com/kicanter"
+                            title="X"
+                            aria-label="Visit X profile"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <i class="nf nf-dev-twitter" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
 
-    <div id="socials" aria-label="Social media links">
-      <a href="https://github.com/kicanter" title="GitHub" aria-label="Visit GitHub profile" target="_blank" rel="noopener noreferrer">
-        <i class="nf nf-md-github link" aria-hidden="true"></i>
-      </a>
-      <a href="https://git.kicanter.dev" title="Forgejo" aria-label="Visit self-hosted Forgejo git server" target="_blank" rel="noopener noreferrer">
-        <i class="nf nf-linux-forgejo link" aria-hidden="true"></i>
-      </a>
-      <a href="https://linkedin.com/in/kierancanter/" title="LinkedIn" aria-label="Visit LinkedIn profile" target="_blank" rel="noopener noreferrer">
-        <i class="nf nf-md-linkedin link" aria-hidden="true"></i>
-      </a>
-      <a href="https://x.com/kicanter" title="X" aria-label="Visit X profile" target="_blank" rel="noopener noreferrer">
-        <i class="nf nf-dev-twitter link" aria-hidden="true"></i>
-      </a>
-    </div>
-  </div>
+                <!-- Back Face -->
+                <div id="card-back" class="card-face">
+                    <section class="resume">
+                        <h1>Jobs</h1>
+                        <ul id="jobs">
+                            <li class="job-active">
+                                <h2>Software Engineer</h2>
+                                <div class="job-footer">
+                                    <h3>Amazon Lab126</h3>
+                                    <h4>Mar. 2025 — Present</h4>
+                                </div>
+                            </li>
+                            <li>
+                                <h2>Cyber Software Engineer</h2>
+                                <div class="job-footer">
+                                    <h3>Peraton Inc.</h3>
+                                    <h4>Oct. 2024 — Mar. 2025</h4>
+                                </div>
+                            </li>
+                            <li>
+                                <h2>Petroleum Supply Specialist (92F)</h2>
+                                <div class="job-footer">
+                                    <h3>U.S. Army Reserve</h3>
+                                    <h4>Mar. 2019 — Mar. 2025</h4>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
 
+                    <section class="resume">
+                        <h1>Works</h1>
+                        <ul id="works">
+                            <li class="wip">
+                                <div class="project-headband">
+                                    <a href="https://github.com/kicanter/filebender" target="_blank" rel="noopener noreferrer"><h2>Filebender</h2></a>
+                                    <a href="https://github.com/kicanter/filebender" target="_blank" rel="noopener noreferrer"><i class="nf nf-md-github" aria-hidden="true"></i></a>
+                                </div>
+
+                                <h3>
+                                    Native and feature-rich file explorer for Linux. 'Tis but a pipedream currently.
+                                </h3>
+                                <ul class="stack">
+                                    <li>TBD</li>
+                                </ul>
+                            </li>
+                            <li class="wip">
+                                <div class="project-headband">
+                                    <a href="https://github.com/kicanter/clipbender" target="_blank" rel="noopener noreferrer"><h2>Clipbender</h2></a>
+                                    <a href="https://github.com/kicanter/clipbender" target="_blank" rel="noopener noreferrer"><i class="nf nf-md-github" aria-hidden="true"></i></a>
+                                </div>
+                                <h3>Linux clipboard manager modeled after Neovim registers.</h3>
+                                <ul class="stack">
+                                    <li>Odin?</li>
+                                </ul>
+                            </li>
+                            <li class="wip">
+                                <div class="project-headband">
+                                    <a href="https://github.com/kicanter/huey" target="_blank" rel="noopener noreferrer"><h2>Huey</h2></a>
+                                    <a href="https://github.com/kicanter/huey" target="_blank" rel="noopener noreferrer"><i class="nf nf-md-github" aria-hidden="true"></i></a>
+                                </div>
+                                <h3>
+                                    TUI tool for color selection/conversion. PoC project for
+                                    <span style="font-family: &quot;IBM Plex Mono&quot;">libchroma</span>. Perhaps a
+                                    neovim plugin to accompany it? Written in Rust btw.
+                                </h3>
+                                <ul class="stack">
+                                    <li>Rust</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="project-headband">
+                                    <a href="https://github.com/kicanter/libchroma" target="_blank" rel="noopener noreferrer"><h2>libchroma</h2></a>
+                                    <a href="https://github.com/kicanter/libchroma" target="_blank" rel="noopener noreferrer"><i class="nf nf-md-github" aria-hidden="true"></i></a>
+                                </div>
+                                <h3>
+                                    Zero-dependency library for color conversion. Compatible with your favorite language
+                                    as a stable C lib.
+                                </h3>
+                                <ul class="stack">
+                                    <li>Zig</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="project-headband">
+                                    <a href="https://github.com/kicanter/candela.nvim" target="_blank" rel="noopener noreferrer"><h2>candela.nvim</h2></a>
+                                    <a href="https://github.com/kicanter/candela.nvim" target="_blank" rel="noopener noreferrer"><i class="nf nf-md-github" aria-hidden="true"></i></a>
+                                </div>
+                                <h3>
+                                    Neovim plugin for efficient log analysis. Manage regex patterns, highlight matched
+                                    lines, filter out non-matches, and rapidly navigate through matches.
+                                </h3>
+                                <ul class="stack">
+                                    <li>Lua</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="project-headband">
+                                    <a href="https://github.com/kicanter/kicanter.dev" target="_blank" rel="noopener noreferrer"><h2>kicanter.dev</h2></a>
+                                    <a href="https://github.com/kicanter/kicanter.dev" target="_blank" rel="noopener noreferrer"><i class="nf nf-md-github" aria-hidden="true"></i></a>
+                                </div>
+                                <h3>
+                                    The website you're viewing, going back to basics. Sometimes HTML and CSS is all you
+                                    need.
+                                </h3>
+                                <ul class="stack">
+                                    <li>HTML</li>
+                                    <li>CSS</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="project-headband">
+                                    <a href="https://github.com/kicanter/ufcwinfactors" target="_blank" rel="noopener noreferrer"><h2>UFC Win Factors Model</h2></a>
+                                    <a href="https://github.com/kicanter/ufcwinfactors" target="_blank" rel="noopener noreferrer"><i class="nf nf-md-github" aria-hidden="true"></i></a>
+                                </div>
+                                <h3>
+                                    A statistical analysis performed on UFC fighter and event stats to determine the
+                                    qualities and attributes most related to winning fights.
+                                </h3>
+                                <ul class="stack">
+                                    <li>Python</li>
+                                    <li>Pandas</li>
+                                    <li>scikit-learn</li>
+                                    <li>XDGBoost</li>
+                                    <li>Matplotlib</li>
+                                    <li>Seaborn</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="project-headband">
+                                    <a href="https://github.com/kicanter/flipready" target="_blank" rel="noopener noreferrer"><h2>FlipReady</h2></a>
+                                    <a href="https://github.com/kicanter/flipready" target="_blank" rel="noopener noreferrer"><i class="nf nf-md-github" aria-hidden="true"></i></a>
+                                </div>
+                                <h3>
+                                    Unmaintained Rocket League plugin, (RIP BakkesMod). Gauge bar to visualize your
+                                    air roll/double jump status. Over 10000 downloads.
+                                </h3>
+                                <ul class="stack">
+                                    <li>C++</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </label>
     </body>
 </html>
