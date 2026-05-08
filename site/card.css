@@ -304,6 +304,6 @@ a:hover {
 /* Large screens */
 @media (min-width: 1024px) {
     #card-container {
-        zoom: 1.15;
+        zoom: 1.25;
     }
 }
