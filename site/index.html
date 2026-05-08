@@ -1,6 +1,13 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <!-- Get user's last-used theme or fallback to system-default -->
+        <script>
+            const saved = localStorage.getItem("theme");
+            const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ganache" : "parchment";
+            document.documentElement.dataset.theme = saved || system;
+        </script>
+
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -82,7 +89,7 @@
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <i class="nf nf-md-github" aria-hidden="true"></i>
+                            <i class="nf nf-cod-github_alt" aria-hidden="true"></i>
                         </a>
                         <a
                             href="https://git.kicanter.dev"
@@ -100,7 +107,7 @@
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <i class="nf nf-md-linkedin" aria-hidden="true"></i>
+                            <i class="nf nf-fa-linkedin" aria-hidden="true"></i>
                         </a>
                         <a
                             href="https://x.com/kicanter"
@@ -117,7 +124,7 @@
                 <!-- Back Face -->
                 <div id="card-back" class="card-face">
                     <section class="resume">
-                        <h1>Jobs</h1>
+                        <h1>jobs</h1>
                         <ul id="jobs">
                             <li class="job-active">
                                 <h2>Software Engineer</h2>
@@ -144,7 +151,7 @@
                     </section>
 
                     <section class="resume">
-                        <h1>Works</h1>
+                        <h1>works</h1>
                         <ul id="works">
                             <li class="wip">
                                 <div class="project-headband">
@@ -270,7 +277,7 @@
                                     ></a>
                                 </div>
                                 <h3>
-                                    The website you're viewing, going back to basics. Sometimes HTML and CSS is all you
+                                    The website you're viewing, going back to basics. Sometimes HTML and CSS (and a splash of JS) is all you
                                     need.
                                 </h3>
                                 <ul class="stack">
@@ -333,6 +340,19 @@
                     </section>
                 </div>
             </div>
+            <button
+                id="theme-button"
+                onclick="
+                    event.preventDefault();
+                    const theme = document.documentElement.dataset.theme === 'parchment' ? 'ganache' : 'parchment';
+                    document.documentElement.dataset.theme = theme;
+                    localStorage.setItem('theme', theme);
+                    this.textContent = theme;
+                "
+            ></button>
         </label>
+        <script>
+            document.getElementById("theme-button").textContent = document.documentElement.dataset.theme;
+        </script>
     </body>
 </html>

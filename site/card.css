@@ -1,3 +1,5 @@
+@import url("style.css");
+
 * {
     margin: 0;
     padding: 0;
@@ -7,10 +9,15 @@
 body {
     height: 100dvh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #352925;
+    background: var(--bg);
     padding: 1rem;
+    transition:
+        color 0.1s ease,
+        background 0.1s ease;
+    gap: 0.5rem;
 }
 
 /* Flip mechanism */
@@ -19,29 +26,37 @@ body {
 }
 
 #card-container {
+    display: flex;
+    flex-direction: column;
     perspective: 1000px;
     width: 100%;
     max-width: 24rem;
-    aspect-ratio: 7 / 4;
-    margin: auto;
 }
 
 #card-inner {
     position: relative;
     width: 100%;
-    height: 100%;
+    aspect-ratio: 7 / 4;
     transition: transform 0.2s ease;
     transform-style: preserve-3d;
 }
 
 #card-inner *::selection {
-    background: #352925;
-    color: #f0ead6;
+    background: var(--text-hard);
+    color: var(--fg);
 }
 
-a {
+#card-inner a {
     color: inherit;
     text-decoration: none;
+}
+
+#card-inner a:hover {
+    color: var(--text-contrast);
+}
+
+#card-inner a:hover *::selection {
+    background: var(--text-contrast);
 }
 
 #flip-toggle:checked ~ #card-container #card-inner {
@@ -59,46 +74,46 @@ a {
 #card-front {
     display: flex;
     flex-direction: column;
-    padding: 0.5rem;
-    color: #1e1e1e;
-    background: #f0ead6;
+    padding: 1rem;
+    color: var(--text-hard);
+    background: var(--fg);
     pointer-events: auto;
 }
 
 #card-back {
-    background: #f0ead6;
-    color: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    background: var(--fg);
+    color: var(--text-hard);
     transform: rotateY(180deg);
-    padding: 0.5rem;
+    padding: 1rem;
     font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
     overflow-y: auto;
+    gap: 1rem;
 }
 
+/* Back face sections */
+
+/* Disable scrollbar on back (firefox) */
 @supports (scrollbar-color: auto) {
     #card-back {
         scrollbar-width: none;
     }
 }
 
+/* Disable scrollbar on back (webkit) */
 @supports selector(::-webkit-scrollbar) {
     #card-back::-webkit-scrollbar {
         display: none;
     }
 }
 
-/* Back face sections */
-#card-back {
-    display: flex;
-    flex-direction: column;
-    padding: 0.5rem;
-    gap: 1rem;
-}
-
 .resume h1 {
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-bottom: 1px solid #1e1e1e;
+    border-bottom: 1px solid var(--text-hard);
     padding-bottom: 0.1rem;
     margin-bottom: 0.5rem;
 }
@@ -113,15 +128,14 @@ a {
 .resume > ul > li {
     display: flex;
     flex-direction: column;
-    background: #35292540;
+    background: rgb(from var(--bg) r g b / 0.6);
     border-radius: 2px;
-    padding: 0.25rem;
+    padding: 0.5rem;
     gap: 0.25rem;
 }
 
 .resume > ul > li:hover {
-    background: #35292550;
-    transition: background 0.1s ease;
+    background: rgb(from var(--bg) r g b / 0.8);
 }
 
 .resume h2 {
@@ -139,11 +153,11 @@ a {
 }
 
 #jobs {
-    color: rgba(53, 41, 37, 0.8);
+    color: var(--text-soft);
 }
 
 .job-active {
-    color: rgb(90, 0, 0);
+    color: var(--text-contrast);
     background: rgb(from currentColor r g b / 0.9);
 }
 
@@ -154,7 +168,7 @@ a {
 }
 
 #works h3 {
-    color: rgba(53, 41, 37, 0.8);
+    color: var(--text-soft);
 }
 
 .project-headband {
@@ -169,7 +183,7 @@ a {
     flex-wrap: wrap;
     font-size: 0.6rem;
     font-family: "IBM Plex Mono", mono;
-    font-weight: 400;
+    font-weight: 600;
     gap: 0.15rem;
     margin-top: 0.15rem;
     list-style: none;
@@ -177,13 +191,14 @@ a {
 
 .stack li {
     padding: 0.15rem 0.3rem;
-    color: #f0ead6;
-    background: rgb(90, 0, 0);
+    color: var(--fg);
+    background: var(--text-contrast);
     border-radius: 2px;
 }
 
 #card-back .stack li::selection {
-    background: #9e463a;
+    background: var(--fg);
+    color: var(--text-contrast);
 }
 
 .wip {
@@ -206,10 +221,10 @@ a {
     top: 50%;
     left: 50%;
     width: 100%;
-    transform: translate(-50%, -50%) rotate(-15deg);
+    transform: translate(-50%, -50%) rotate(-25deg);
     padding: 0.25rem;
-    background: rgb(90, 0, 0);
-    color: #f0ead6;
+    background: var(--text-contrast);
+    color: var(--fg);
     text-align: center;
     font-size: 0.75rem;
     font-weight: 600;
@@ -238,18 +253,18 @@ a {
 
 #logo {
     width: 1.25rem;
+    fill: currentColor;
 }
 
 #logo svg {
     width: 100%;
     height: auto;
-    fill: #1e1e1e;
+    fill: var(--text-hard);
+    color: var(--text-hard);
 }
 
 #logo:hover svg {
-    filter: brightness(0) saturate(100%) invert(7%) sepia(95%) saturate(4977%) hue-rotate(24deg) brightness(83%)
-        contrast(122%);
-    transition: filter 0.1s ease;
+    color: var(--text-contrast);
 }
 
 /* Center Content */
@@ -274,13 +289,13 @@ a {
 
 #name {
     font-family: "Spectral SC", serif;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
 }
 
 #title {
     font-family: "Spectral SC", serif;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 500;
 }
 
@@ -296,10 +311,30 @@ a {
     justify-content: space-between;
 }
 
-a:hover {
-    color: rgb(90, 0, 0);
-    transition: all 0.1s ease;
+/* Theme Toggle */
+#theme-button {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: fit-content;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    font-family: "IBM Plex Mono", serif;
+    font-size: 0.70rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-hard);
+    background: var(--fg);
+    letter-spacing: 0.05em;
+    box-shadow: 0rem 0.1rem 0.4rem 0rem rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 2px;
 }
+
+#theme-button:hover {
+    color: var(--text-contrast);
+}
+
 
 /* Large screens */
 @media (min-width: 1024px) {
