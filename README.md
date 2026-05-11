@@ -1,5 +1,11 @@
 <h1 align="center">
-  <img alt="KIC Logo" src="public/images/logo-canonical.png" width="100" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/images/logo-readme-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="assets/images/logo-readme-light.png">
+    <img alt="logo" src="assets/images/logo-readme-light.png" width="100">
+  </picture>
+
   </br>
+
   kicanter.dev
 </h1>
