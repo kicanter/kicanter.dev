@@ -51,6 +51,8 @@ uniform vec3 u_fg;
 uniform vec3 u_text_soft;
 uniform vec3 u_text_hard;
 
+// Aurora threads — thin luminous ribbons drifting like northern lights
+
 vec3 mod289(vec3 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
 vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
 vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
@@ -99,10 +101,8 @@ float snoise(vec3 v) {
     return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
 }
 
-float hash(vec2 p) {
-    vec3 p3 = fract(vec3(p.xyx) * 0.1031);
-    p3 += dot(p3, p3.yzx + 33.33);
-    return fract((p3.x + p3.y) * p3.z);
+float ridge(float n) {
+    return 1.0 - abs(n);
 }
 
 void main() {
@@ -110,34 +110,33 @@ void main() {
     vec2 aspect = vec2(u_resolution.x / u_resolution.y, 1.0);
     vec2 p = (uv - 0.5) * aspect;
 
-    float t = u_time * 0.05;
+    float t = u_time * 0.1;
 
-    // Domain warping for organic smoke movement
-    vec2 warp = vec2(
-        snoise(vec3(p * 0.7, t * 0.3)),
-        snoise(vec3(p * 0.7 + 5.0, t * 0.25))
-    ) * 0.4;
-    vec2 wp = p + warp;
+    // Stretch space diagonally for sweeping ribbon feel
+    vec2 sp = vec2(p.x * 0.7 + p.y * 0.5, p.y * 1.2 - p.x * 0.3);
 
-    // Smoke — smooth, slow, large forms
-    float smoke = snoise(vec3(wp * 1.0, t * 0.4)) * 0.5
-                + snoise(vec3(wp * 2.0 + 20.0, t * 0.3)) * 0.3
-                + snoise(vec3(wp * 3.5 + 40.0, t * 0.35)) * 0.2;
-    smoke = smoke * 0.5 + 0.5;
-    smoke = smoothstep(0.2, 0.8, smoke);
+    // Ridged noise creates thin bright lines
+    float r1 = ridge(snoise(vec3(sp * 0.5, t * 0.3)));
+    r1 = pow(r1, 9.0);
 
-    // Glimmer — sharp bright points that appear along smoke
-    float glim = snoise(vec3(wp * 9.0, t * 1.2));
-    glim = pow(max(glim, 0.0), 7.0) * smoke;
+    float r2 = ridge(snoise(vec3(sp * 1.0 + 10.0, t * 0.25 + 5.0)));
+    r2 = pow(r2, 10.0);
 
-    float glim2 = snoise(vec3(wp * 14.0 + 70.0, t * 1.6));
-    glim2 = pow(max(glim2, 0.0), 9.0) * smoke;
+    float r3 = ridge(snoise(vec3(sp * 1.8 + 20.0, t * 0.2 + 10.0)));
+    r3 = pow(r3, 12.0);
 
-    // Color
-    vec3 color = mix(u_bg, u_fg, smoke * 0.35);
-    vec3 glint = mix(u_fg, u_text_soft, 0.3);
-    color += glint * glim * 0.3;
-    color += glint * glim2 * 0.2;
+    // Combine ribbons
+    float ribbons = r1 * 0.5 + r2 * 0.3 + r3 * 0.2;
+
+    // Soft glow around ribbons
+    float glow = ridge(snoise(vec3(sp * 1.5, t * 0.2)));
+    glow = pow(glow, 2.0) * 0.3;
+
+    float intensity = ribbons * 0.6 + glow * 0.4;
+
+    float lum = dot(u_bg, vec3(0.299, 0.587, 0.114));
+    float strength = mix(0.55, 0.9, lum);
+    vec3 color = mix(u_bg, u_fg, intensity * strength);
 
     fragColor = vec4(color, 1.0);
 }`;
@@ -164,6 +163,8 @@ gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.ST
 const loc = gl.getAttribLocation(prog, 'a_pos');
 gl.enableVertexAttribArray(loc);
 gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+const timeOffset = Math.random() * 10000.0;
 
 const uTime = gl.getUniformLocation(prog, 'u_time');
 const uRes = gl.getUniformLocation(prog, 'u_resolution');
@@ -203,6 +204,7 @@ function render(t) {
 
     if (!initialized) {
         currentColors = { bg: newBg, fg: newFg, textSoft: newTextSoft, textHard: newTextHard };
+        startColors = { bg: newBg, fg: newFg, textSoft: newTextSoft, textHard: newTextHard };
         targetColors = { bg: newBg, fg: newFg, textSoft: newTextSoft, textHard: newTextHard };
         initialized = true;
     } else if (!colorsEqual(newBg, targetColors.bg)) {
@@ -220,7 +222,7 @@ function render(t) {
         if (progress >= 1.0) easeStart = -1;
     }
 
-    gl.uniform1f(uTime, seconds);
+    gl.uniform1f(uTime, seconds + timeOffset);
     gl.uniform2f(uRes, canvas.width, canvas.height);
     gl.uniform3f(uBg, currentColors.bg[0], currentColors.bg[1], currentColors.bg[2]);
     gl.uniform3f(uFg, currentColors.fg[0], currentColors.fg[1], currentColors.fg[2]);
