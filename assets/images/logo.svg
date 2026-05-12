@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-615.91088,-610.94024)">
+    <g
+       id="g33"
+       transform="matrix(1.0435398,0,0,1.0435398,605.42784,599.79406)"
+       style="display:inline;fill:#d6c4b0;fill-opacity:1;stroke:none;stroke-width:5.98923;stroke-dasharray:none;stroke-opacity:1;paint-order:normal">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:531.654px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;direction:ltr;fill:#d6c4b0;fill-opacity:1;stroke:none;stroke-width:5.98923;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+         x="-379.68582"
+         y="414.61356"
+         id="text32"
+         transform="scale(-1,1)"><tspan
+           id="tspan32"
+           x="-379.68582"
+           y="414.61356"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';fill:#d6c4b0;fill-opacity:1;stroke:none;stroke-width:5.98923;stroke-dasharray:none;stroke-opacity:1;paint-order:normal">{</tspan></text>
+      <path
+         d="m 443.07845,256 h -92.93561 v 245.31885 h 92.93561 z"
+         id="path32"
+         style="font-weight:bold;font-size:531.654px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';fill:#d6c4b0;fill-opacity:1;stroke:none;stroke-width:5.98923;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+         aria-label="i" />
+      <path
+         id="path33"
+         style="fill:#d6c4b0;fill-opacity:1;stroke:none;stroke-width:5.98923;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+         d="m 396.45857,213.56177 c 0,0 1.97393,-35.87941 46.31573,-80.2212 -44.3418,-44.341801 -46.31573,-80.221189 -46.31573,-80.221189 0,0 -1.97393,35.879388 -46.31573,80.221189 44.3418,44.34179 46.31573,80.2212 46.31573,80.2212 z" />
+    </g>
+    <g
+       id="g35"
+       transform="matrix(1.0435398,0,0,1.0435398,605.42783,-5.4893234)"
+       style="display:inline;fill:#352925;fill-opacity:1;stroke:none;stroke-width:5.98923;stroke-dasharray:none;stroke-opacity:1;paint-order:normal">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:531.654px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;direction:ltr;fill:#352925;fill-opacity:1;stroke:none;stroke-width:5.98923;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+         x="-379.68582"
+         y="414.61356"
+         id="text33"
+         transform="scale(-1,1)"><tspan
+           id="tspan33"
+           x="-379.68582"
+           y="414.61356"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';fill:#352925;fill-opacity:1;stroke:none;stroke-width:5.98923;stroke-dasharray:none;stroke-opacity:1;paint-order:normal">{</tspan></text>
+      <path
+         d="m 443.07845,256 h -92.93561 v 245.31885 h 92.93561 z"
+         id="path34"
+         style="font-weight:bold;font-size:531.654px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';fill:#352925;fill-opacity:1;stroke:none;stroke-width:5.98923;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+         aria-label="i" />
+      <path
+         id="path35"
+         style="fill:#352925;fill-opacity:1;stroke:none;stroke-width:5.98923;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+         d="m 396.45857,213.56177 c 0,0 1.97393,-35.87941 46.31573,-80.2212 -44.3418,-44.341801 -46.31573,-80.221189 -46.31573,-80.221189 0,0 -1.97393,35.879388 -46.31573,80.221189 44.3418,44.34179 46.31573,80.2212 46.31573,80.2212 z" />
+    </g>
+  </g>
+</svg>
