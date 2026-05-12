@@ -51,7 +51,7 @@ uniform vec3 u_fg;
 uniform vec3 u_text_soft;
 uniform vec3 u_text_hard;
 
-// Aurora threads — thin luminous ribbons drifting like northern lights
+// Fluid marble — warped domain creates organic veining
 
 vec3 mod289(vec3 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
 vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
@@ -101,42 +101,36 @@ float snoise(vec3 v) {
     return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
 }
 
-float ridge(float n) {
-    return 1.0 - abs(n);
-}
-
 void main() {
     vec2 uv = v_uv;
     vec2 aspect = vec2(u_resolution.x / u_resolution.y, 1.0);
     vec2 p = (uv - 0.5) * aspect;
 
-    float t = u_time * 0.1;
+    float t = u_time * 0.08;
 
-    // Stretch space diagonally for sweeping ribbon feel
-    vec2 sp = vec2(p.x * 0.7 + p.y * 0.5, p.y * 1.2 - p.x * 0.3);
+    // Deep domain warping — creates organic fluid veins
+    vec2 q = vec2(
+        snoise(vec3(p * 1.5, t * 0.3)),
+        snoise(vec3(p * 1.5 + 5.2, t * 0.25))
+    );
 
-    // Ridged noise creates thin bright lines
-    float r1 = ridge(snoise(vec3(sp * 0.5, t * 0.3)));
-    r1 = pow(r1, 9.0);
+    vec2 r = vec2(
+        snoise(vec3((p + q * 0.8) * 1.8, t * 0.2 + 1.7)),
+        snoise(vec3((p + q * 0.8) * 1.8 + 3.1, t * 0.22 + 4.3))
+    );
 
-    float r2 = ridge(snoise(vec3(sp * 1.0 + 10.0, t * 0.25 + 5.0)));
-    r2 = pow(r2, 10.0);
+    // Final noise with heavy warping — creates marble-like veins
+    float n = snoise(vec3((p + r * 0.7) * 2.0, t * 0.15));
+    n = n * 0.5 + 0.5;
 
-    float r3 = ridge(snoise(vec3(sp * 1.8 + 20.0, t * 0.2 + 10.0)));
-    r3 = pow(r3, 12.0);
+    // Sharpen into veins using sin of scaled noise
+    float veins = abs(sin(n * 8.0 + q.x * 4.0));
+    veins = pow(veins, 0.4);
 
-    // Combine ribbons
-    float ribbons = r1 * 0.5 + r2 * 0.3 + r3 * 0.2;
+    // Soft underlying form
+    float form = n * 0.3 + veins * 0.7;
 
-    // Soft glow around ribbons
-    float glow = ridge(snoise(vec3(sp * 1.5, t * 0.2)));
-    glow = pow(glow, 2.0) * 0.3;
-
-    float intensity = ribbons * 0.6 + glow * 0.4;
-
-    float lum = dot(u_bg, vec3(0.299, 0.587, 0.114));
-    float strength = mix(0.55, 0.9, lum);
-    vec3 color = mix(u_bg, u_fg, intensity * strength);
+    vec3 color = mix(u_bg, u_fg, form * 0.1);
 
     fragColor = vec4(color, 1.0);
 }`;
