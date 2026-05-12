@@ -55,7 +55,8 @@ body {
     color: var(--text-contrast);
 }
 
-#card-inner a:hover *::selection {
+#card-inner a:hover *::selection,
+#card-inner a:hover::selection {
     background: var(--text-contrast);
 }
 
@@ -71,6 +72,7 @@ body {
     border-radius: 2px;
     box-shadow: 0rem 0.1rem 0.4rem 0rem rgba(0, 0, 0, 0.3);
 }
+
 #card-front {
     display: flex;
     flex-direction: column;
@@ -78,6 +80,10 @@ body {
     color: var(--text-hard);
     background: var(--fg);
     pointer-events: auto;
+}
+
+#card-front a:hover::selection {
+    background: var(--text-contrast);
 }
 
 #card-back {
@@ -156,9 +162,21 @@ body {
     color: var(--text-soft);
 }
 
+#jobs h2::selection,
+#jobs h3::selection,
+#jobs h4::selection {
+    color: var(--fg);
+    background: var(--text-soft);
+}
+
 .job-active {
     color: var(--text-contrast);
     background: rgb(from currentColor r g b / 0.9);
+}
+
+#jobs .job-active ::selection {
+    color: var(--fg);
+    background: var(--text-contrast);
 }
 
 .job-footer {
@@ -169,6 +187,11 @@ body {
 
 #works h3 {
     color: var(--text-soft);
+}
+
+#works h3::selection {
+    color: var(--fg);
+    background: var(--text-soft);
 }
 
 .project-headband {
@@ -320,7 +343,7 @@ body {
     margin-top: 0.5rem;
     padding: 0.5rem;
     font-family: "IBM Plex Mono", serif;
-    font-size: 0.70rem;
+    font-size: 0.7rem;
     font-weight: 600;
     cursor: pointer;
     color: var(--text-hard);
@@ -331,10 +354,19 @@ body {
     border-radius: 2px;
 }
 
+#theme-button::selection {
+    background: var(--text-hard);
+    color: var(--fg);
+}
+
 #theme-button:hover {
     color: var(--text-contrast);
 }
 
+#theme-button:hover::selection {
+    background: var(--text-contrast);
+    color: var(--fg);
+}
 
 /* Large screens */
 @media (min-width: 1024px) {
