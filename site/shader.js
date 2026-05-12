@@ -51,7 +51,7 @@ uniform vec3 u_fg;
 uniform vec3 u_text_soft;
 uniform vec3 u_text_hard;
 
-// Fluid marble — warped domain creates organic veining
+// Ink diffusion — slow tendrils spreading like ink dropped in still water
 
 vec3 mod289(vec3 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
 vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
@@ -106,31 +106,25 @@ void main() {
     vec2 aspect = vec2(u_resolution.x / u_resolution.y, 1.0);
     vec2 p = (uv - 0.5) * aspect;
 
-    float t = u_time * 0.08;
+    float t = u_time * 0.04;
 
-    // Deep domain warping — creates organic fluid veins
-    vec2 q = vec2(
-        snoise(vec3(p * 1.5, t * 0.3)),
-        snoise(vec3(p * 1.5 + 5.2, t * 0.25))
-    );
+    // Curl-like distortion to simulate fluid advection
+    float nx = snoise(vec3(p * 2.0, t * 0.3));
+    float ny = snoise(vec3(p * 2.0 + 100.0, t * 0.3));
+    vec2 curl = vec2(ny, -nx) * 0.4;
 
-    vec2 r = vec2(
-        snoise(vec3((p + q * 0.8) * 1.8, t * 0.2 + 1.7)),
-        snoise(vec3((p + q * 0.8) * 1.8 + 3.1, t * 0.22 + 4.3))
-    );
+    vec2 q = p + curl;
 
-    // Final noise with heavy warping — creates marble-like veins
-    float n = snoise(vec3((p + r * 0.7) * 2.0, t * 0.15));
-    n = n * 0.5 + 0.5;
+    // Ink concentration — turbulent noise with sharp edges
+    float ink = snoise(vec3(q * 3.0, t * 0.5));
+    ink += snoise(vec3(q * 6.0 + 50.0, t * 0.4)) * 0.5;
+    ink += snoise(vec3(q * 12.0 + 100.0, t * 0.35)) * 0.25;
 
-    // Sharpen into veins using sin of scaled noise
-    float veins = abs(sin(n * 8.0 + q.x * 4.0));
-    veins = pow(veins, 0.4);
+    // Threshold to create tendril shapes
+    ink = smoothstep(-0.2, 0.6, ink);
+    ink = pow(ink, 1.5);
 
-    // Soft underlying form
-    float form = n * 0.3 + veins * 0.7;
-
-    vec3 color = mix(u_bg, u_fg, form * 0.1);
+    vec3 color = mix(u_bg, u_fg, ink * 0.09);
 
     fragColor = vec4(color, 1.0);
 }`;
@@ -189,7 +183,7 @@ function colorsEqual(a, b) {
 }
 
 function render(t) {
-    const seconds = t * 0.001;
+    const seconds = t * 0.006;
     const colors = getThemeColors();
     const newBg = hexToVec3(colors.bg);
     const newFg = hexToVec3(colors.fg);
