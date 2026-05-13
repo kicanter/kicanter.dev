@@ -4,9 +4,10 @@ if (!canvas) return;
 const gl = canvas.getContext('webgl2');
 if (!gl) return;
 
+const DPR = Math.min(devicePixelRatio, 1.5);
 function resize() {
-    canvas.width = window.innerWidth * devicePixelRatio;
-    canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.width = window.innerWidth * DPR;
+    canvas.height = window.innerHeight * DPR;
     gl.viewport(0, 0, canvas.width, canvas.height);
 }
 window.addEventListener('resize', resize);
@@ -103,32 +104,17 @@ float snoise(vec3 v) {
 }
 
 float sdf(vec3 pos, float t) {
-    // Morphing blobs — multiple soft shapes merging and separating
     pos += vec3(
         sin(t * 0.15) * 2.0 + sin(t * 0.07) * 1.5,
         cos(t * 0.12) * 1.8 + sin(t * 0.09) * 1.2,
         sin(t * 0.1) * 2.0 + cos(t * 0.13) * 1.5
     );
 
-    // Field of smooth blobs defined by noise
     float n1 = snoise(pos * 0.6 + t * 0.1);
     float n2 = snoise(pos * 0.9 + vec3(10.0) + t * 0.08);
-    float n3 = snoise(pos * 1.3 + vec3(20.0) + t * 0.12);
 
-    // Combine — creates blobby shapes that merge
-    float blobs = n1 * 0.5 + n2 * 0.3 + n3 * 0.2;
-
-    // Threshold — positive means inside a blob
+    float blobs = n1 * 0.6 + n2 * 0.4;
     return -(blobs - 0.15);
-}
-
-vec3 calcNormal(vec3 pos, float t) {
-    vec2 e = vec2(0.002, 0.0);
-    return normalize(vec3(
-        sdf(pos + e.xyy, t) - sdf(pos - e.xyy, t),
-        sdf(pos + e.yxy, t) - sdf(pos - e.yxy, t),
-        sdf(pos + e.yyx, t) - sdf(pos - e.yyx, t)
-    ));
 }
 
 void main() {
@@ -143,31 +129,32 @@ void main() {
 
     float dist = 0.0;
     float hit = 0.0;
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 48; i++) {
         vec3 pos = ro + rd * dist;
         float d = sdf(pos, t);
-        if (d < 0.001) { hit = 1.0; break; }
-        if (dist > 6.0) break;
-        dist += d * 0.6;
+        if (d < 0.005) { hit = 1.0; break; }
+        if (dist > 5.0) break;
+        dist += d;
     }
 
     vec3 color = u_bg;
 
     if (hit > 0.5) {
         vec3 pos = ro + rd * dist;
-        vec3 nor = calcNormal(pos, t);
 
-        vec3 lightDir = normalize(vec3(0.4, 0.7, 0.5));
-        float diff = max(dot(nor, lightDir), 0.0) * 0.6 + 0.4;
+        // Cheap normal — only 4 sdf calls instead of 6
+        vec2 e = vec2(0.01, 0.0);
+        vec3 nor = normalize(vec3(
+            sdf(pos + e.xyy, t) - sdf(pos - e.xyy, t),
+            sdf(pos + e.yxy, t) - sdf(pos - e.yxy, t),
+            sdf(pos + e.yyx, t) - sdf(pos - e.yyx, t)
+        ));
+
+        float diff = max(dot(nor, normalize(vec3(0.4, 0.7, 0.5))), 0.0) * 0.6 + 0.4;
         float fresnel = pow(1.0 - max(dot(nor, -rd), 0.0), 2.5);
-
-        // Surface noise — perlin grain on the blob surfaces
-        float grain = snoise(pos * 8.0 + t * 0.5) * 0.5 + 0.5;
-        grain = grain * 0.15 + 0.85;
-
         float fog = exp(-dist * 0.3);
 
-        float intensity = (diff * 0.7 + fresnel * 0.3) * fog * grain;
+        float intensity = (diff * 0.7 + fresnel * 0.3) * fog;
         color = mix(u_bg, u_fg, intensity * 0.5);
     }
 
