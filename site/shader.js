@@ -4,7 +4,7 @@ if (!canvas) return;
 const gl = canvas.getContext('webgl2');
 if (!gl) return;
 
-const DPR = Math.min(devicePixelRatio, 1.5);
+const DPR = Math.min(devicePixelRatio, 1.0);
 function resize() {
     canvas.width = window.innerWidth * DPR;
     canvas.height = window.innerHeight * DPR;
@@ -74,40 +74,31 @@ float vnoise(vec3 p) {
 float scene(vec3 pos, float t) {
     float d = 1000.0;
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 3; i++) {
         float fi = float(i);
         float phase = fi * 1.7 + fi * fi * 0.4;
 
-        // Wider orbits — more spacing
         vec3 center = vec3(
             sin(t * (0.1 + fi * 0.025) + phase) * (4.5 + fi * 0.7),
             cos(t * (0.08 + fi * 0.02) + phase * 1.4) * (3.5 + fi * 0.6),
             sin(t * (0.07 + fi * 0.015) + phase * 0.9) * 2.5 - 5.0
         );
 
-        // Large blobs with heavy noise texture
+        vec3 diff = pos - center;
+        float len = length(diff);
         float radius = 2.8 + sin(fi * 2.1) * 0.6 + 0.4 * sin(t * 0.12 + fi * 3.0);
-        vec3 dir = normalize(pos - center);
-        radius += vnoise(dir * 2.0 + t * 0.12 + fi * 5.0) * 0.6;
-        radius += vnoise(dir * 5.0 + t * 0.2 + fi * 8.0) * 0.2;
 
-        float sphere = length(pos - center) - radius;
+        // Single noise displacement on the surface
+        vec3 dir = diff / max(len, 0.001);
+        radius += vnoise(dir * 3.0 + t * 0.12 + fi * 5.0) * 0.5;
+
+        float sphere = len - radius;
         float k = 0.6;
         float h = clamp(0.5 + 0.5 * (sphere - d) / k, 0.0, 1.0);
         d = mix(sphere, d, h) - k * h * (1.0 - h);
     }
 
     return d;
-}
-
-vec3 calcNormal(vec3 pos, float t) {
-    vec2 e = vec2(0.02, -0.02);
-    return normalize(
-        e.xyy * scene(pos + e.xyy, t) +
-        e.yyx * scene(pos + e.yyx, t) +
-        e.yxy * scene(pos + e.yxy, t) +
-        e.xxx * scene(pos + e.xxx, t)
-    );
 }
 
 void main() {
@@ -122,19 +113,26 @@ void main() {
 
     float dist = 0.0;
     float hit = 0.0;
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 24; i++) {
         vec3 pos = ro + rd * dist;
         float d = scene(pos, t);
-        if (d < 0.01) { hit = 1.0; break; }
-        if (dist > 12.0) break;
-        dist += d;
+        if (d < 0.03) { hit = 1.0; break; }
+        if (dist > 10.0) break;
+        dist += d * 0.75;
     }
 
     vec3 color = u_bg;
 
     if (hit > 0.5) {
         vec3 pos = ro + rd * dist;
-        vec3 nor = calcNormal(pos, t);
+
+        // 3-call normal (forward differences only)
+        float d0 = scene(pos, t);
+        vec3 nor = normalize(vec3(
+            scene(pos + vec3(0.04, 0.0, 0.0), t) - d0,
+            scene(pos + vec3(0.0, 0.04, 0.0), t) - d0,
+            scene(pos + vec3(0.0, 0.0, 0.04), t) - d0
+        ));
 
         vec3 lightDir = normalize(vec3(0.5, 0.8, 0.3));
         float diff = max(dot(nor, lightDir), 0.0) * 0.6 + 0.4;
