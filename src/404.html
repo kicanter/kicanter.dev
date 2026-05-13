@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <script>
+            const saved = localStorage.getItem("theme");
+            const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ganache" : "parchment";
+            document.documentElement.dataset.theme = saved || system;
+        </script>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Kieran not found</title>
+        <meta name="description" content="Page not found" />
+
+        <link rel="icon" href="/favicons/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicons/favicon-192-light.png" sizes="192x192" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/favicons/favicon-192-dark.png" sizes="192x192" media="(prefers-color-scheme: dark)" />
+        <link rel="icon" href="/favicons/favicon.svg" type="image/svg+xml" />
+
+        <meta name="theme-color" content="#d6c4b0" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#352925" media="(prefers-color-scheme: dark)" />
+
+        <link rel="stylesheet" href="vars.css" />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <canvas id="shader-bg" aria-hidden="true"></canvas>
+        <div id="card-container">
+            <div id="card-inner">
+                <div id="card-front" class="card-face fof">
+                    <h1 id="fof-title">404</h1>
+                    <h2 id="fof-message">How'd a nitwit like you get so tasteful?</h2>
+                    <h3 id="fof-link-home">
+                        <a href="https://kicanter.dev">kicanter.dev</a>
+                    </h3>
+                </div>
+            </div>
+            <div id="button-row">
+                <button
+                    id="shader-button"
+                    onclick="
+                        event.preventDefault();
+                        const canvas = document.getElementById('shader-bg');
+                        const active = canvas.dataset.active !== 'false';
+                        canvas.dataset.active = !active;
+                        canvas.style.opacity = active ? '0' : '1';
+                        localStorage.setItem('shader', active ? 'off' : 'on');
+                        this.classList.toggle('off', active);
+                    "
+                >
+                    motion
+                </button>
+                <button
+                    id="theme-button"
+                    onclick="
+                        event.preventDefault();
+                        const theme = document.documentElement.dataset.theme === 'parchment' ? 'ganache' : 'parchment';
+                        document.documentElement.dataset.theme = theme;
+                        localStorage.setItem('theme', theme);
+                        this.textContent = theme;
+                    "
+                ></button>
+            </div>
+        </div>
+        <script>
+            document.getElementById("theme-button").textContent = document.documentElement.dataset.theme;
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const shaderPref = localStorage.getItem("shader") || (reducedMotion ? "off" : "on");
+            const shaderCanvas = document.getElementById("shader-bg");
+            const shaderBtn = document.getElementById("shader-button");
+            if (shaderPref === "off") {
+                shaderCanvas.style.opacity = "0";
+                shaderCanvas.dataset.active = "false";
+                shaderBtn.classList.add("off");
+            } else {
+                shaderCanvas.dataset.active = "true";
+            }
+        </script>
+        <script src="shader.js"></script>
+    </body>
+</html>

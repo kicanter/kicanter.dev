@@ -1,0 +1,461 @@
+@import url("vars.css");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    padding: 1rem;
+    transition:
+        color 0.1s ease,
+        background 0.1s ease;
+    gap: 0.5rem;
+}
+
+/* Flip mechanism */
+#flip-toggle {
+    display: none;
+}
+
+#card-container {
+    display: flex;
+    flex-direction: column;
+    perspective: 1000px;
+    width: 100%;
+    max-width: 24rem;
+}
+
+#card-inner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 7 / 4;
+    transition: transform 0.2s ease;
+    transform-style: preserve-3d;
+}
+
+#card-inner *::selection {
+    background: var(--text-hard);
+    color: var(--fg);
+}
+
+#card-inner a {
+    color: inherit;
+    text-decoration: none;
+}
+
+#card-inner a:hover {
+    color: var(--text-contrast);
+}
+
+#card-inner a:hover *::selection,
+#card-inner a:hover::selection {
+    background: var(--text-contrast);
+}
+
+#flip-toggle:checked ~ #card-container #card-inner {
+    transform: rotateY(-180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 2px;
+    box-shadow: 0rem 0.1rem 0.4rem 0rem rgba(0, 0, 0, 0.3);
+}
+
+#card-front {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    color: var(--text-hard);
+    background: var(--fg);
+    pointer-events: auto;
+}
+
+#card-front a:hover::selection {
+    background: var(--text-contrast);
+}
+
+#card-back {
+    display: flex;
+    flex-direction: column;
+    background: var(--fg);
+    color: var(--text-hard);
+    transform: rotateY(180deg);
+    padding: 1rem;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    overflow-y: auto;
+    gap: 1rem;
+}
+
+/* Back face sections */
+
+/* Disable scrollbar on back (firefox) */
+@supports (scrollbar-color: auto) {
+    #card-back {
+        scrollbar-width: none;
+    }
+}
+
+/* Disable scrollbar on back (webkit) */
+@supports selector(::-webkit-scrollbar) {
+    #card-back::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.resume h1 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--text-hard);
+    padding-bottom: 0.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.resume > ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    gap: 0.5rem;
+}
+
+.resume > ul > li {
+    display: flex;
+    flex-direction: column;
+    background: rgb(from var(--bg) r g b / 0.6);
+    border-radius: 2px;
+    padding: 0.5rem;
+    gap: 0.25rem;
+}
+
+.resume > ul > li:hover {
+    background: rgb(from var(--bg) r g b / 0.8);
+}
+
+.resume h2 {
+    display: block;
+    font-size: 0.9rem;
+}
+.resume h3 {
+    font-size: 0.7rem;
+}
+
+.resume h4 {
+    font-size: 0.7rem;
+    font-family: "IBM Plex Mono", mono;
+    white-space: pre;
+}
+
+#jobs {
+    color: var(--text-soft);
+}
+
+#jobs h2::selection,
+#jobs h3::selection,
+#jobs h4::selection {
+    color: var(--fg);
+    background: var(--text-soft);
+}
+
+.job-active {
+    color: var(--text-contrast);
+    background: rgb(from currentColor r g b / 0.9);
+}
+
+#jobs .job-active ::selection {
+    color: var(--fg);
+    background: var(--text-contrast);
+}
+
+.job-footer {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+#works h3 {
+    color: var(--text-soft);
+}
+
+#works h3::selection {
+    color: var(--fg);
+    background: var(--text-soft);
+}
+
+.project-headband {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    line-height: 1;
+}
+
+.stack {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.6rem;
+    font-family: "IBM Plex Mono", mono;
+    font-weight: 600;
+    gap: 0.15rem;
+    margin-top: 0.15rem;
+    list-style: none;
+}
+
+.stack li {
+    padding: 0.15rem 0.3rem;
+    color: var(--fg);
+    background: var(--text-contrast);
+    border-radius: 2px;
+}
+
+#card-back .stack li::selection {
+    background: var(--fg);
+    color: var(--text-contrast);
+}
+
+.wip {
+    position: relative;
+    overflow: hidden;
+}
+
+.wip::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.wip::after {
+    content: "WORK IN PROGRESS";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    padding: 0.25rem;
+    background: var(--text-contrast);
+    color: var(--fg);
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+/* Phone and Logo Section */
+#headband {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#email {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    font-family: "IBM Plex Serif", serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+#logo {
+    width: 1.25rem;
+    fill: currentColor;
+}
+
+#logo svg {
+    width: 100%;
+    height: auto;
+    fill: var(--text-hard);
+    color: var(--text-hard);
+}
+
+#logo:hover svg {
+    color: var(--text-contrast);
+}
+
+/* Center Content */
+#me {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+#name {
+    font-family: "Spectral SC", serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+#title {
+    font-family: "Spectral SC", serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+/* Social Links */
+#socials {
+    position: relative;
+    font-size: 0.9rem;
+    display: flex;
+    width: 30%;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
+}
+
+/* Button Row */
+#button-row {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+#shader-button {
+    position: relative;
+    width: fit-content;
+    padding: 0.5rem;
+    font-family: "IBM Plex Mono", serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-hard);
+    background: var(--fg);
+    letter-spacing: 0.05em;
+    box-shadow: 0rem 0.1rem 0.4rem 0rem rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 2px;
+    transition:
+        color 0.1s ease,
+        background 0.1s ease,
+        opacity 0.1s ease;
+}
+
+#shader-button.off {
+    opacity: 0.4;
+}
+
+#shader-button::selection {
+    background: var(--text-hard);
+    color: var(--fg);
+}
+
+#shader-button:hover {
+    color: var(--text-contrast);
+}
+
+#shader-button:hover::selection {
+    background: var(--text-contrast);
+    color: var(--fg);
+}
+
+/* Theme Toggle */
+#theme-button {
+    width: fit-content;
+    padding: 0.5rem;
+    font-family: "IBM Plex Mono", serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-hard);
+    background: var(--fg);
+    letter-spacing: 0.05em;
+    box-shadow: 0rem 0.1rem 0.4rem 0rem rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 2px;
+    transition:
+        color 0.1s ease,
+        background 0.1s ease;
+}
+
+#theme-button::selection {
+    background: var(--text-hard);
+    color: var(--fg);
+}
+
+#theme-button:hover {
+    color: var(--text-contrast);
+}
+
+#theme-button:hover::selection {
+    background: var(--text-contrast);
+    color: var(--fg);
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+    #card-container {
+        zoom: 1.25;
+    }
+}
+
+#shader-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
+}
+
+/* 404 */
+.fof {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+#fof-title {
+    font-family: "Spectral SC", serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: auto;
+}
+
+#fof-message {
+    font-family: "Spectral SC", serif;
+    font-weight: 500;
+    font-size: 0.7rem;
+}
+
+#fof-link-home {
+    font-family: "IBM Plex Serif", serif;
+    font-weight: 500;
+    font-size: 0.8rem;
+    margin-top: auto;
+}
+
+#fof-link-home a {
+    text-decoration: underline;
+}
