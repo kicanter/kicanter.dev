@@ -51,7 +51,8 @@ uniform vec3 u_fg;
 uniform vec3 u_text_soft;
 uniform vec3 u_text_hard;
 
-// Ink diffusion — slow tendrils spreading like ink dropped in still water
+// Noise sphere — raymarched blob with noise displacement
+// like p5aholic's organic 3D forms
 
 vec3 mod289(vec3 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
 vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
@@ -101,30 +102,64 @@ float snoise(vec3 v) {
     return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
 }
 
+float sdf(vec3 pos, float t) {
+    float radius = 0.8;
+    float d = length(pos) - radius;
+    // Noise displacement
+    vec3 np = normalize(pos) * 1.5;
+    d += snoise(np + t * 0.3) * 0.15;
+    d += snoise(np * 2.0 + t * 0.2) * 0.08;
+    d += snoise(np * 4.0 + t * 0.15) * 0.04;
+    return d;
+}
+
+vec3 calcNormal(vec3 pos, float t) {
+    vec2 e = vec2(0.001, 0.0);
+    return normalize(vec3(
+        sdf(pos + e.xyy, t) - sdf(pos - e.xyy, t),
+        sdf(pos + e.yxy, t) - sdf(pos - e.yxy, t),
+        sdf(pos + e.yyx, t) - sdf(pos - e.yyx, t)
+    ));
+}
+
 void main() {
     vec2 uv = v_uv;
     vec2 aspect = vec2(u_resolution.x / u_resolution.y, 1.0);
     vec2 p = (uv - 0.5) * aspect;
 
-    float t = u_time * 0.04;
+    float t = u_time * 0.08;
 
-    // Curl-like distortion to simulate fluid advection
-    float nx = snoise(vec3(p * 2.0, t * 0.3));
-    float ny = snoise(vec3(p * 2.0 + 100.0, t * 0.3));
-    vec2 curl = vec2(ny, -nx) * 0.4;
+    // Camera
+    vec3 ro = vec3(0.0, 0.0, 2.8);
+    vec3 rd = normalize(vec3(p, -1.5));
 
-    vec2 q = p + curl;
+    // Raymarch
+    float dist = 0.0;
+    float hit = 0.0;
+    for (int i = 0; i < 64; i++) {
+        vec3 pos = ro + rd * dist;
+        float d = sdf(pos, t);
+        if (d < 0.001) { hit = 1.0; break; }
+        if (dist > 5.0) break;
+        dist += d;
+    }
 
-    // Ink concentration — turbulent noise with sharp edges
-    float ink = snoise(vec3(q * 3.0, t * 0.5));
-    ink += snoise(vec3(q * 6.0 + 50.0, t * 0.4)) * 0.5;
-    ink += snoise(vec3(q * 12.0 + 100.0, t * 0.35)) * 0.25;
+    vec3 color = u_bg;
 
-    // Threshold to create tendril shapes
-    ink = smoothstep(-0.2, 0.6, ink);
-    ink = pow(ink, 1.5);
+    if (hit > 0.5) {
+        vec3 pos = ro + rd * dist;
+        vec3 nor = calcNormal(pos, t);
 
-    vec3 color = mix(u_bg, u_fg, ink * 0.09);
+        // Soft lighting
+        vec3 lightDir = normalize(vec3(0.5, 0.8, 1.0));
+        float diff = max(dot(nor, lightDir), 0.0) * 0.6 + 0.4;
+
+        // Fresnel rim
+        float fresnel = pow(1.0 - max(dot(nor, -rd), 0.0), 3.0);
+
+        float intensity = diff * 0.7 + fresnel * 0.3;
+        color = mix(u_bg, u_fg, intensity * 0.5);
+    }
 
     fragColor = vec4(color, 1.0);
 }`;
