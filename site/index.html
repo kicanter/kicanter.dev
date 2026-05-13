@@ -353,19 +353,44 @@
                     </section>
                 </div>
             </div>
-            <button
-                id="theme-button"
-                onclick="
-                    event.preventDefault();
-                    const theme = document.documentElement.dataset.theme === 'parchment' ? 'ganache' : 'parchment';
-                    document.documentElement.dataset.theme = theme;
-                    localStorage.setItem('theme', theme);
-                    this.textContent = theme;
-                "
-            ></button>
+            <div id="button-row">
+                <button
+                    id="shader-button"
+                    onclick="
+                        event.preventDefault();
+                        const canvas = document.getElementById('shader-bg');
+                        const active = canvas.dataset.active !== 'false';
+                        canvas.dataset.active = !active;
+                        canvas.style.opacity = active ? '0' : '1';
+                        localStorage.setItem('shader', active ? 'off' : 'on');
+                        this.classList.toggle('off', active);
+                    "
+                >motion</button>
+                <button
+                    id="theme-button"
+                    onclick="
+                        event.preventDefault();
+                        const theme = document.documentElement.dataset.theme === 'parchment' ? 'ganache' : 'parchment';
+                        document.documentElement.dataset.theme = theme;
+                        localStorage.setItem('theme', theme);
+                        this.textContent = theme;
+                    "
+                ></button>
+            </div>
         </label>
         <script>
             document.getElementById("theme-button").textContent = document.documentElement.dataset.theme;
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const shaderPref = localStorage.getItem("shader") || (reducedMotion ? "off" : "on");
+            const shaderCanvas = document.getElementById("shader-bg");
+            const shaderBtn = document.getElementById("shader-button");
+            if (shaderPref === "off") {
+                shaderCanvas.style.opacity = "0";
+                shaderCanvas.dataset.active = "false";
+                shaderBtn.classList.add("off");
+            } else {
+                shaderCanvas.dataset.active = "true";
+            }
         </script>
         <script src="shader.js"></script>
     </body>
