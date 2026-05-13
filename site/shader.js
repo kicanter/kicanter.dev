@@ -52,8 +52,6 @@ uniform vec3 u_fg;
 uniform vec3 u_text_soft;
 uniform vec3 u_text_hard;
 
-// Cheap 3D value noise — much faster than simplex
-
 float hash3(vec3 p) {
     p = fract(p * 0.1031);
     p += dot(p, p.zyx + 31.32);
@@ -64,7 +62,6 @@ float vnoise(vec3 p) {
     vec3 i = floor(p);
     vec3 f = fract(p);
     f = f * f * (3.0 - 2.0 * f);
-
     return mix(
         mix(mix(hash3(i), hash3(i + vec3(1,0,0)), f.x),
             mix(hash3(i + vec3(0,1,0)), hash3(i + vec3(1,1,0)), f.x), f.y),
@@ -74,18 +71,43 @@ float vnoise(vec3 p) {
     ) * 2.0 - 1.0;
 }
 
-float sdf(vec3 pos, float t) {
-    pos += vec3(
-        sin(t * 0.15) * 2.0 + sin(t * 0.07) * 1.5,
-        cos(t * 0.12) * 1.8 + sin(t * 0.09) * 1.2,
-        sin(t * 0.1) * 2.0 + cos(t * 0.13) * 1.5
+float scene(vec3 pos, float t) {
+    float d = 1000.0;
+
+    for (int i = 0; i < 5; i++) {
+        float fi = float(i);
+        float phase = fi * 1.7 + fi * fi * 0.4;
+
+        // Wider orbits — more spacing
+        vec3 center = vec3(
+            sin(t * (0.1 + fi * 0.025) + phase) * (4.5 + fi * 0.7),
+            cos(t * (0.08 + fi * 0.02) + phase * 1.4) * (3.5 + fi * 0.6),
+            sin(t * (0.07 + fi * 0.015) + phase * 0.9) * 2.5 - 5.0
+        );
+
+        // Large blobs with heavy noise texture
+        float radius = 2.8 + sin(fi * 2.1) * 0.6 + 0.4 * sin(t * 0.12 + fi * 3.0);
+        vec3 dir = normalize(pos - center);
+        radius += vnoise(dir * 2.0 + t * 0.12 + fi * 5.0) * 0.6;
+        radius += vnoise(dir * 5.0 + t * 0.2 + fi * 8.0) * 0.2;
+
+        float sphere = length(pos - center) - radius;
+        float k = 0.6;
+        float h = clamp(0.5 + 0.5 * (sphere - d) / k, 0.0, 1.0);
+        d = mix(sphere, d, h) - k * h * (1.0 - h);
+    }
+
+    return d;
+}
+
+vec3 calcNormal(vec3 pos, float t) {
+    vec2 e = vec2(0.02, -0.02);
+    return normalize(
+        e.xyy * scene(pos + e.xyy, t) +
+        e.yyx * scene(pos + e.yyx, t) +
+        e.yxy * scene(pos + e.yxy, t) +
+        e.xxx * scene(pos + e.xxx, t)
     );
-
-    float n1 = vnoise(pos * 0.6 + t * 0.1);
-    float n2 = vnoise(pos * 0.9 + vec3(10.0) + t * 0.08);
-
-    float blobs = n1 * 0.6 + n2 * 0.4;
-    return -(blobs - 0.15);
 }
 
 void main() {
@@ -93,20 +115,18 @@ void main() {
     vec2 aspect = vec2(u_resolution.x / u_resolution.y, 1.0);
     vec2 p = (uv - 0.5) * aspect;
 
-    float t = u_time * 0.025;
+    float t = u_time * 0.25;
 
-    vec3 ro = vec3(0.0, 0.0, 0.0);
-    vec3 rd = normalize(vec3(p * 0.5, -1.0));
+    vec3 ro = vec3(0.0, 0.0, 3.0);
+    vec3 rd = normalize(vec3(p, -1.2));
 
     float dist = 0.0;
     float hit = 0.0;
-    float minD = 1.0;
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 40; i++) {
         vec3 pos = ro + rd * dist;
-        float d = sdf(pos, t);
-        minD = min(minD, d);
+        float d = scene(pos, t);
         if (d < 0.01) { hit = 1.0; break; }
-        if (dist > 4.0) break;
+        if (dist > 12.0) break;
         dist += d;
     }
 
@@ -114,26 +134,15 @@ void main() {
 
     if (hit > 0.5) {
         vec3 pos = ro + rd * dist;
+        vec3 nor = calcNormal(pos, t);
 
-        // Tetrahedron normal — 4 sdf calls instead of 6
-        vec2 e = vec2(0.02, -0.02);
-        vec3 nor = normalize(
-            e.xyy * sdf(pos + e.xyy, t) +
-            e.yyx * sdf(pos + e.yyx, t) +
-            e.yxy * sdf(pos + e.yxy, t) +
-            e.xxx * sdf(pos + e.xxx, t)
-        );
+        vec3 lightDir = normalize(vec3(0.5, 0.8, 0.3));
+        float diff = max(dot(nor, lightDir), 0.0) * 0.6 + 0.4;
+        float fresnel = pow(1.0 - max(dot(nor, -rd), 0.0), 3.0);
+        float fog = exp(-dist * 0.12);
 
-        float diff = max(dot(nor, normalize(vec3(0.4, 0.7, 0.5))), 0.0) * 0.6 + 0.4;
-        float fresnel = pow(1.0 - max(dot(nor, -rd), 0.0), 2.5);
-        float fog = exp(-dist * 0.35);
-
-        float intensity = (diff * 0.7 + fresnel * 0.3) * fog;
-        color = mix(u_bg, u_fg, intensity * 0.5);
-    } else {
-        // Soft glow near misses
-        float glow = smoothstep(0.3, 0.0, minD);
-        color = mix(u_bg, u_fg, glow * 0.08);
+        float intensity = (diff * 0.6 + fresnel * 0.4) * fog;
+        color = mix(u_bg, u_fg, intensity * 0.6);
     }
 
     fragColor = vec4(color, 1.0);
@@ -162,7 +171,7 @@ const loc = gl.getAttribLocation(prog, 'a_pos');
 gl.enableVertexAttribArray(loc);
 gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
-const timeOffset = Math.random() * 10000.0;
+const timeOffset = Math.random() * 200.0;
 
 const uTime = gl.getUniformLocation(prog, 'u_time');
 const uRes = gl.getUniformLocation(prog, 'u_resolution');
@@ -193,7 +202,7 @@ function colorsEqual(a, b) {
 }
 
 function render(t) {
-    const seconds = t * 0.006;
+    const seconds = t * 0.001;
     const colors = getThemeColors();
     const newBg = hexToVec3(colors.bg);
     const newFg = hexToVec3(colors.fg);
