@@ -103,20 +103,27 @@ float snoise(vec3 v) {
 }
 
 float sdf(vec3 pos, float t) {
-    // Gyroid — infinite periodic minimal surface
-    // Camera moves through it slowly
-    pos += vec3(t * 0.15, t * 0.1, t * 0.12);
+    // Morphing blobs — multiple soft shapes merging and separating
+    pos += vec3(
+        sin(t * 0.15) * 2.0 + sin(t * 0.07) * 1.5,
+        cos(t * 0.12) * 1.8 + sin(t * 0.09) * 1.2,
+        sin(t * 0.1) * 2.0 + cos(t * 0.13) * 1.5
+    );
 
-    float scale = 3.5;
-    vec3 sp = pos * scale;
-    float gyroid = dot(sin(sp), cos(sp.zxy));
+    // Field of smooth blobs defined by noise
+    float n1 = snoise(pos * 0.6 + t * 0.1);
+    float n2 = snoise(pos * 0.9 + vec3(10.0) + t * 0.08);
+    float n3 = snoise(pos * 1.3 + vec3(20.0) + t * 0.12);
 
-    // Thickness of the surface
-    return abs(gyroid) / scale - 0.03;
+    // Combine — creates blobby shapes that merge
+    float blobs = n1 * 0.5 + n2 * 0.3 + n3 * 0.2;
+
+    // Threshold — positive means inside a blob
+    return -(blobs - 0.15);
 }
 
 vec3 calcNormal(vec3 pos, float t) {
-    vec2 e = vec2(0.001, 0.0);
+    vec2 e = vec2(0.002, 0.0);
     return normalize(vec3(
         sdf(pos + e.xyy, t) - sdf(pos - e.xyy, t),
         sdf(pos + e.yxy, t) - sdf(pos - e.yxy, t),
@@ -129,21 +136,19 @@ void main() {
     vec2 aspect = vec2(u_resolution.x / u_resolution.y, 1.0);
     vec2 p = (uv - 0.5) * aspect;
 
-    float t = u_time * 0.08;
+    float t = u_time * 0.025;
 
-    // Camera
-    vec3 ro = vec3(0.0, 0.0, 2.8);
-    vec3 rd = normalize(vec3(p, -1.5));
+    vec3 ro = vec3(0.0, 0.0, 0.0);
+    vec3 rd = normalize(vec3(p * 0.5, -1.0));
 
-    // Raymarch
     float dist = 0.0;
     float hit = 0.0;
-    for (int i = 0; i < 64; i++) {
+    for (int i = 0; i < 100; i++) {
         vec3 pos = ro + rd * dist;
         float d = sdf(pos, t);
         if (d < 0.001) { hit = 1.0; break; }
-        if (dist > 5.0) break;
-        dist += d;
+        if (dist > 6.0) break;
+        dist += d * 0.6;
     }
 
     vec3 color = u_bg;
@@ -152,14 +157,17 @@ void main() {
         vec3 pos = ro + rd * dist;
         vec3 nor = calcNormal(pos, t);
 
-        // Soft lighting
-        vec3 lightDir = normalize(vec3(0.5, 0.8, 1.0));
+        vec3 lightDir = normalize(vec3(0.4, 0.7, 0.5));
         float diff = max(dot(nor, lightDir), 0.0) * 0.6 + 0.4;
+        float fresnel = pow(1.0 - max(dot(nor, -rd), 0.0), 2.5);
 
-        // Fresnel rim
-        float fresnel = pow(1.0 - max(dot(nor, -rd), 0.0), 3.0);
+        // Surface noise — perlin grain on the blob surfaces
+        float grain = snoise(pos * 8.0 + t * 0.5) * 0.5 + 0.5;
+        grain = grain * 0.15 + 0.85;
 
-        float intensity = diff * 0.7 + fresnel * 0.3;
+        float fog = exp(-dist * 0.3);
+
+        float intensity = (diff * 0.7 + fresnel * 0.3) * fog * grain;
         color = mix(u_bg, u_fg, intensity * 0.5);
     }
 
