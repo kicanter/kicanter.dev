@@ -103,14 +103,16 @@ float snoise(vec3 v) {
 }
 
 float sdf(vec3 pos, float t) {
-    float radius = 0.8;
-    float d = length(pos) - radius;
-    // Noise displacement
-    vec3 np = normalize(pos) * 1.5;
-    d += snoise(np + t * 0.3) * 0.15;
-    d += snoise(np * 2.0 + t * 0.2) * 0.08;
-    d += snoise(np * 4.0 + t * 0.15) * 0.04;
-    return d;
+    // Gyroid — infinite periodic minimal surface
+    // Camera moves through it slowly
+    pos += vec3(t * 0.15, t * 0.1, t * 0.12);
+
+    float scale = 3.5;
+    vec3 sp = pos * scale;
+    float gyroid = dot(sin(sp), cos(sp.zxy));
+
+    // Thickness of the surface
+    return abs(gyroid) / scale - 0.03;
 }
 
 vec3 calcNormal(vec3 pos, float t) {
