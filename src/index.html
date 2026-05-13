@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Get user's last-used theme or fallback to system-default -->
+        <script>
+            const saved = localStorage.getItem("theme");
+            const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ganache" : "parchment";
+            document.documentElement.dataset.theme = saved || system;
+        </script>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Kieran CANTER</title>
+        <meta name="description" content="if you're reading this, drink more milk" />
+        <meta name="author" content="Kieran Canter, him@kicanter.dev" />
+        <link rel="canonical" href="https://kicanter.dev" />
+
+        <!-- Social Media Previews -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://kicanter.dev" />
+        <meta property="og:title" content="Kieran CANTER" />
+        <meta property="og:site_name" content="kicanter" />
+        <meta property="og:description" content="if you're reading this, drink more milk" />
+        <!-- 1200x630px -->
+        <meta property="og:image" content="https://kicanter.dev/thumbnail.png" />
+        <meta property="og:email" content="him@kicanter.dev" />
+
+        <!-- Twitter/X Specifics -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@kicanter" />
+
+        <!-- Icons -->
+        <link rel="icon" href="/favicons/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicons/favicon-192-light.png" sizes="192x192" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/favicons/favicon-192-dark.png" sizes="192x192" media="(prefers-color-scheme: dark)" />
+        <link
+            rel="apple-touch-icon"
+            href="/favicons/favicon-180-light.png"
+            sizes="180x180"
+            media="(prefers-color-scheme: light)"
+        />
+        <link
+            rel="apple-touch-icon"
+            href="/favicons/favicon-180-dark.png"
+            sizes="180x180"
+            media="(prefers-color-scheme: dark)"
+        />
+        <link rel="icon" href="/favicons/favicon.svg" type="image/svg+xml" />
+
+        <meta name="theme-color" content="#d6c4b0" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#352925" media="(prefers-color-scheme: dark)" />
+
+        <!-- External Assets -->
+        <link rel="stylesheet" href="vars.css" />
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+    </head>
+    <body>
+        <canvas id="shader-bg" aria-hidden="true"></canvas>
+        <input type="checkbox" id="flip-toggle" aria-hidden="true" />
+        <label for="flip-toggle" id="card-container" aria-label="Click to flip card">
+            <div id="card-inner">
+                <!-- Front Face -->
+                <div id="card-front" class="card-face" aria-label="Kieran Canter's Business Card">
+                    <div id="headband">
+                        <a
+                            id="email"
+                            href="mailto:him@kicanter.dev"
+                            title="Email"
+                            aria-label="Email: him@kicanter.dev"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            him@kicanter.dev
+                        </a>
+
+                        <a
+                            id="logo"
+                            href="https://www.youtube.com/watch?v=YHgwxVCiMyI"
+                            title="Impressive. Very nice. Let's see Paul Allen's card."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Logo: Link to an American Psycho video reference"
+                        >
+                            <!-- LogoSVG placeholder - replace with your actual SVG -->
+                            <svg viewBox="0 0 100 100" alt="Logo">
+                                <use href="/logo.svg" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div id="me" aria-labelledby="name title">
+                        <h1 id="name">Kieran CANTER</h1>
+                        <h2 id="title">Software Engineer</h2>
+                    </div>
+
+                    <div id="socials" aria-label="Social media links">
+                        <a
+                            href="https://github.com/kicanter"
+                            title="GitHub"
+                            aria-label="Visit GitHub profile"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <i class="nf nf-cod-github_alt" aria-hidden="true"></i>
+                        </a>
+                        <a
+                            href="https://git.kicanter.dev"
+                            title="Forgejo"
+                            aria-label="Visit self-hosted Forgejo git server"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <i class="nf nf-linux-forgejo" aria-hidden="true"></i>
+                        </a>
+                        <a
+                            href="https://linkedin.com/in/kierancanter/"
+                            title="LinkedIn"
+                            aria-label="Visit LinkedIn profile"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <i class="nf nf-fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a
+                            href="https://x.com/kicanter"
+                            title="X"
+                            aria-label="Visit X profile"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <i class="nf nf-dev-twitter" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Back Face -->
+                <div id="card-back" class="card-face">
+                    <section class="resume">
+                        <h1>jobs</h1>
+                        <ul id="jobs">
+                            <li class="job-active">
+                                <h2>Software Engineer</h2>
+                                <div class="job-footer">
+                                    <h3>Amazon Lab126</h3>
+                                    <h4>Mar. 2025 — Present&nbsp;&nbsp;</h4>
+                                </div>
+                            </li>
+                            <li>
+                                <h2>Cyber Software Engineer</h2>
+                                <div class="job-footer">
+                                    <h3>Peraton Inc.</h3>
+                                    <h4>Oct. 2024 — Mar. 2025</h4>
+                                </div>
+                            </li>
+                            <li>
+                                <h2>Petroleum Supply Specialist (92F)</h2>
+                                <div class="job-footer">
+                                    <h3>U.S. Army Reserve</h3>
+                                    <h4>Mar. 2019 — Mar. 2025</h4>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section class="resume">
+                        <h1>works</h1>
+                        <ul id="works">
+                            <li class="wip">
+                                <div class="project-headband">
+                                    <a
+                                        href="https://github.com/kicanter/filebender"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><h2>Filebender</h2></a
+                                    >
+                                    <a
+                                        href="https://github.com/kicanter/filebender"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><i class="nf nf-md-github" aria-hidden="true"></i
+                                    ></a>
+                                </div>
+
+                                <h3>
+                                    Linux file explorer that will hopefully make me want to actually use a file
+                                    explorer. 'Tis but a pipedream currently.
+                                </h3>
+                                <ul class="stack">
+                                    <li>TBD</li>
+                                </ul>
+                            </li>
+                            <li class="wip">
+                                <div class="project-headband">
+                                    <a
+                                        href="https://github.com/kicanter/clipbender"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><h2>Clipbender</h2></a
+                                    >
+                                    <a
+                                        href="https://github.com/kicanter/clipbender"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><i class="nf nf-md-github" aria-hidden="true"></i
+                                    ></a>
+                                </div>
+                                <h3>Linux clipboard manager modeled after Neovim registers.</h3>
+                                <ul class="stack">
+                                    <li>Odin?</li>
+                                </ul>
+                            </li>
+                            <li class="wip">
+                                <div class="project-headband">
+                                    <a href="https://github.com/kicanter/huey" target="_blank" rel="noopener noreferrer"
+                                        ><h2>Huey</h2></a
+                                    >
+                                    <a href="https://github.com/kicanter/huey" target="_blank" rel="noopener noreferrer"
+                                        ><i class="nf nf-md-github" aria-hidden="true"></i
+                                    ></a>
+                                </div>
+                                <h3>
+                                    TUI tool for color selection/conversion. PoC project for
+                                    <span style="font-family: &quot;IBM Plex Mono&quot;">libchroma</span>. Perhaps a
+                                    neovim plugin to accompany it? Written in Rust btw.
+                                </h3>
+                                <ul class="stack">
+                                    <li>Rust</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="project-headband">
+                                    <a
+                                        href="https://github.com/kicanter/libchroma"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><h2>libchroma</h2></a
+                                    >
+                                    <a
+                                        href="https://github.com/kicanter/libchroma"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><i class="nf nf-md-github" aria-hidden="true"></i
+                                    ></a>
+                                </div>
+                                <h3>
+                                    Zero-dependency library for color conversion. Compatible with your favorite language
+                                    as a C-ABI lib.
+                                </h3>
+                                <ul class="stack">
+                                    <li>Zig</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="project-headband">
+                                    <a
+                                        href="https://github.com/kicanter/candela.nvim"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><h2>candela.nvim</h2></a
+                                    >
+                                    <a
+                                        href="https://github.com/kicanter/candela.nvim"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><i class="nf nf-md-github" aria-hidden="true"></i
+                                    ></a>
+                                </div>
+                                <h3>
+                                    Neovim plugin for efficient log analysis. Manage regex patterns, highlight matched
+                                    lines, filter out non-matches, and rapidly navigate through matches.
+                                </h3>
+                                <ul class="stack">
+                                    <li>Lua</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="project-headband">
+                                    <a
+                                        href="https://github.com/kicanter/kicanter.dev"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><h2>kicanter.dev</h2></a
+                                    >
+                                    <a
+                                        href="https://github.com/kicanter/kicanter.dev"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><i class="nf nf-md-github" aria-hidden="true"></i
+                                    ></a>
+                                </div>
+                                <h3>
+                                    The website you're viewing, going back to basics. Sometimes HTML, CSS, and JS is all
+                                    you need.
+                                </h3>
+                                <ul class="stack">
+                                    <li>HTML</li>
+                                    <li>CSS</li>
+                                    <li>JS</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="project-headband">
+                                    <a
+                                        href="https://github.com/kicanter/ufcwinfactors"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><h2>UFC Win Factors Model</h2></a
+                                    >
+                                    <a
+                                        href="https://github.com/kicanter/ufcwinfactors"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><i class="nf nf-md-github" aria-hidden="true"></i
+                                    ></a>
+                                </div>
+                                <h3>
+                                    A statistical analysis performed on UFC fighter and event stats to determine the
+                                    qualities and attributes most related to winning fights.
+                                </h3>
+                                <ul class="stack">
+                                    <li>Python</li>
+                                    <li>Pandas</li>
+                                    <li>scikit-learn</li>
+                                    <li>XDGBoost</li>
+                                    <li>Matplotlib</li>
+                                    <li>Seaborn</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="project-headband">
+                                    <a
+                                        href="https://github.com/kicanter/flipready"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><h2>FlipReady</h2></a
+                                    >
+                                    <a
+                                        href="https://github.com/kicanter/flipready"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><i class="nf nf-md-github" aria-hidden="true"></i
+                                    ></a>
+                                </div>
+                                <h3>
+                                    Unmaintained Rocket League plugin, (RIP BakkesMod). Gauge bar to visualize your air
+                                    roll/double jump status. Over 10000 downloads.
+                                </h3>
+                                <ul class="stack">
+                                    <li>C++</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div id="button-row">
+                <button
+                    id="shader-button"
+                    onclick="
+                        event.preventDefault();
+                        const canvas = document.getElementById('shader-bg');
+                        const active = canvas.dataset.active !== 'false';
+                        canvas.dataset.active = !active;
+                        canvas.style.opacity = active ? '0' : '1';
+                        localStorage.setItem('shader', active ? 'off' : 'on');
+                        this.classList.toggle('off', active);
+                    "
+                >
+                    motion
+                </button>
+                <button
+                    id="theme-button"
+                    onclick="
+                        event.preventDefault();
+                        const theme = document.documentElement.dataset.theme === 'parchment' ? 'ganache' : 'parchment';
+                        document.documentElement.dataset.theme = theme;
+                        localStorage.setItem('theme', theme);
+                        this.textContent = theme;
+                    "
+                ></button>
+            </div>
+        </label>
+        <script>
+            document.getElementById("theme-button").textContent = document.documentElement.dataset.theme;
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const shaderPref = localStorage.getItem("shader") || (reducedMotion ? "off" : "on");
+            const shaderCanvas = document.getElementById("shader-bg");
+            const shaderBtn = document.getElementById("shader-button");
+            if (shaderPref === "off") {
+                shaderCanvas.style.opacity = "0";
+                shaderCanvas.dataset.active = "false";
+                shaderBtn.classList.add("off");
+            } else {
+                shaderCanvas.dataset.active = "true";
+            }
+        </script>
+        <script src="shader.js"></script>
+    </body>
+</html>
