@@ -298,7 +298,6 @@ body {
     width: fit-content;
     height: fit-content;
     align-items: center;
-    gap: 0.25rem;
 }
 
 #name {
