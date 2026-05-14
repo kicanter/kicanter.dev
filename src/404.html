@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <!-- Get user's last-used theme or fallback to system-default -->
         <script>
             const saved = localStorage.getItem("theme");
             const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ganache" : "parchment";
@@ -11,16 +12,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <title>Kieran not found</title>
-        <meta name="description" content="Page not found" />
+        <meta name="description" content="I am simply not there." />
+        <meta name="author" content="Kieran Canter, him@kicanter.dev" />
+        <link rel="canonical" href="https://kicanter.dev" />
 
+        <!-- Icons -->
         <link rel="icon" href="./favicons/favicon.ico" sizes="any" />
         <link rel="icon" href="./favicons/favicon-192-light.png" sizes="192x192" media="(prefers-color-scheme: light)" />
         <link rel="icon" href="./favicons/favicon-192-dark.png" sizes="192x192" media="(prefers-color-scheme: dark)" />
+        <link
+            rel="apple-touch-icon"
+            href="./favicons/favicon-180-light.png"
+            sizes="180x180"
+            media="(prefers-color-scheme: light)"
+        />
+        <link
+            rel="apple-touch-icon"
+            href="./favicons/favicon-180-dark.png"
+            sizes="180x180"
+            media="(prefers-color-scheme: dark)"
+        />
         <link rel="icon" href="./favicons/favicon.svg" type="image/svg+xml" />
 
         <meta name="theme-color" content="#d6c4b0" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#352925" media="(prefers-color-scheme: dark)" />
 
+        <!-- External Assets -->
         <link rel="stylesheet" href="vars.css" />
         <link rel="stylesheet" href="style.css" />
     </head>
