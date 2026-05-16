@@ -11,8 +11,10 @@
 </h1>
 
 ## v2
+<img width="720" height="auto" alt="preview-v2" src="https://github.com/user-attachments/assets/fba191c6-4a66-43e9-b97a-a02b8c52cf7d" />
 
 ## v1
+<img width="720" height="auto" alt="preview-v1" src="https://github.com/user-attachments/assets/474e0727-5e98-4c33-ab18-7eb1dd610ecd" />
 
 ## Inspiration
 
