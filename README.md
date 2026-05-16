@@ -9,3 +9,20 @@
 
   kicanter.dev
 </h1>
+
+## v2
+
+## v1
+
+## Inspiration
+
+* [Keita Yamada](https://p5aholic.me)
+* [Ansub Khan](https://ansubkhan.com)
+* [Anthony Fu](https://antfu.me)
+* [Embed](https://astolfo.org)
+* [Charles Bruyerre](https://itssharl.ee)
+* [Brittany Chiang](https://brittanychiang.com)
+* [Takuya Matsuyama](https://craftz.dog)
+* [Mads Hougesen](https://mhouge.dk)
+
+_I would also like to mention [Stefan Fisk's site](https://stefanfisk.com/) for originally inspiring the American Psycho business card aesthetic._
